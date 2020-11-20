@@ -3,3 +3,4 @@
   margin: 0;
   text-rendering:optimizeLegibility;
 }
+*{outline: 1px solid red;}

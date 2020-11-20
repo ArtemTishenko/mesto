@@ -15,3 +15,11 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face{
+  src: url('./Inter/Inter-Medium.woff') format('woff'),
+       url('./Inter/Inter-Medium.woff2') format('woff2');
+  font-family: Inter-Medium;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
