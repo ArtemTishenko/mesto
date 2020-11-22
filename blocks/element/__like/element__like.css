@@ -1,3 +1,9 @@
 .element__like{
   margin: 0 0 0 auto;
+  background-image: url(../__like/like.svg);
+  object-fit: cover;
+  width: 20.76px;
+  height: 18.13px;
+  border: none;
+
 }
