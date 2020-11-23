@@ -1,0 +1,54 @@
+.popup{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+.popup_visible{
+  display: flex;
+}
+
+.popup__container{
+  width:430px;
+  height: 330px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  margin: auto;
+  position: relative;
+}
+
+.popup__button-close{
+  margin: 0 0 0 auto;
+  background-color: transparent;
+  background-image: url(../popup/__button-close/popup_button_close_svg.svg);
+  object-fit: cover;
+  width: 40px;
+  height: 40px;
+  border: none;
+  position: inherit;
+  left: 432px;
+  bottom: 41px;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+}
+.popup__caption{
+  margin: -6px 64px 0px 36px;
+  font-size: 24px;
+  line-height: 29px;
+  font-family: "Inter","Arial", sans-serif;
+  font-weight: 900;
+}
+.popup__field-name{
+  width: 358px;
+}
+.popup__field-job{
+  width: 358px;
+}

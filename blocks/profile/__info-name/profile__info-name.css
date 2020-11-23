@@ -1,5 +1,6 @@
 .profile__info-name {
-  font-family: 'Inter-Medium', 'Arial', sans-serif;
+  font-family:  "Inter","Arial", sans-serif ;
+  font-weight: 500;
   font-size: 42px;
   line-height: 48px;
   margin: 0 0 0 0;
