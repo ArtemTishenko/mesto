@@ -2,6 +2,6 @@
   display: flex;
   flex-direction: row;
   padding:25px 15px 31px 21px ;
-  max-width: 246px;
+
   align-items: baseline;
 }

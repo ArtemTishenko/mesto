@@ -1,0 +1,29 @@
+.popup__button-close{
+  /* margin: 0 0 0 auto; */
+  background-color: transparent;
+  background-image: url(../__button-close/popup_button_close_svg.svg);
+  object-fit: cover;
+  width: 40px;
+  height: 40px;
+  border: none;
+  position: absolute;
+  left: 430px;
+  top: -40px;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+
+}
+.popup__button-close:focus{
+  outline: none;
+}
+
+@media screen and (max-width:670px){
+  .popup__button-close{
+    width: 21px;
+    height: 21px;
+    left: 255px;
+    top: -44px;
+  }
+}
