@@ -1,4 +1,4 @@
-.profile__info-eddit-button {
+.profile__button-info-eddit {
   width: 24px;
   height: 24px;
   background-color: transparent;
@@ -6,14 +6,14 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0 0 0 16px;
-  background-image: url(./eddit-button.svg);
+  background-image: url(./button-info-eddit.svg);
   background-repeat: no-repeat;
   background-position: center;
 
 }
 
 @media screen and (max-width:670px){
-  .profile__info-eddit-button{
+  .profile__button-info-eddit{
     margin: 0 0 0 10px;
     width: 18px;
     height: 18px;

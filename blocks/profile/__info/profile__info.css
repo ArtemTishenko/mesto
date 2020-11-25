@@ -1,6 +1,6 @@
 .profile__info {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   max-width: 336px;
 
