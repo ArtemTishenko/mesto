@@ -28,8 +28,8 @@ const popupContainer = document.querySelector('.popup__container'); // Восп�
  let profileInfoJobNode = document.querySelector('.profile__info-job');
 
 
-
-
+ nameInput.value = profileInfoNameNode.textContent;
+ jobInput.value = profileInfoJobNode.textContent;
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
