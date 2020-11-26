@@ -2,10 +2,10 @@
   min-width: 150px;
   min-height: 50px;
   background-color: transparent;
-  border: 1px solid #FFFFFF;
+  border: 2px solid #FFFFFF;
   box-sizing: border-box;
   padding: 0;
-  background-image: url(./button-add.png);
+  background-image: url(./button-add.svg);
   background-repeat: no-repeat;
   background-position: center;
   margin: 0 0 0 auto;

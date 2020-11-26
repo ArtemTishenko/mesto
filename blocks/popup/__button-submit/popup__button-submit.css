@@ -14,6 +14,9 @@
   border-radius: 2px;
   align-self: center;
 }
+.popup__button-submit:hover{
+  opacity: 0.8;
+}
 @media screen and (max-width:670px){
   .popup__button-submit{
     max-width: 238px;

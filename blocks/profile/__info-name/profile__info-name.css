@@ -17,16 +17,3 @@
     max-width: 254px;
   }
 }
-@media screen and (max-width:320px){
-  .profile__info-name{
-    font-size: 27px;
-    line-height: 33px;
-
-  }
-}
-
-.profile__info-name-eddit{
-  display: flex;
-  align-items: baseline;
-  margin: 0px 0px 7px;
-}

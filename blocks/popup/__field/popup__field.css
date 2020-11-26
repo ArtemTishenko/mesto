@@ -4,7 +4,7 @@
   border: none;
   border-bottom: 1px solid rgba(0,0,0, 0.5);
   outline: none;
-  font-family: "Inter", "Arial", sans-serif;
+  font-family: 'Inter', 'Arial', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
@@ -17,5 +17,9 @@
 }
 
 .popup__field:focus{
-  outline: none;
+  outline: auto 1px;
+}
+
+.popup__field:first-child{
+  margin: 0 0 30px 0;
 }
