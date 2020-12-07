@@ -32,3 +32,57 @@ function formSubmitHandler (evt) {
 profileButtonInfoEddit.addEventListener('click', openPopup );
 popupButtonClose.addEventListener('click', closePopup );
 popupContainer.addEventListener('submit', formSubmitHandler);// Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
+
+//!_____________________________________________________________________________________________________________________________________________________/
+
+const initialCards = [
+  {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+const listContainerElement = document.querySelector('.elements');
+const templateCard = document.querySelector('.template');
+
+function renderCard(){ // функция добавления карточки из массива
+
+const cardItems = initialCards.map(composeCard);
+console.log(cardItems);
+listContainerElement.append(...cardItems);
+
+
+}
+
+function composeCard(item){ // функция клонирования template, добавления картинки и имени карточки
+const newCard = templateCard.content.cloneNode(true);
+const elementCaption = newCard.querySelector('.element__caption');
+const elementImg = newCard.querySelector('.element__img');
+
+elementCaption.textContent = item.name;
+elementImg.setAttribute('src', `${item.link}`);
+elementImg.setAttribute('alt',`${item.name}`);
+return newCard;
+}
+
+renderCard();
