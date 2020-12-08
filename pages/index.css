@@ -42,6 +42,7 @@
 @import url(../blocks/popup/__field/_type/popup__field_type_name.css);
 @import url(../blocks/popup/__button-submit/popup__button-submit.css);
 
-@import url();
+@import url(../blocks/element/__delete/element__delete.css);
+@import url(../blocks/element/__like/_active/element__like_active.css)
 
 

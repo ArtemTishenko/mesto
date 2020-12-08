@@ -66,23 +66,43 @@ const listContainerElement = document.querySelector('.elements');
 const templateCard = document.querySelector('.template');
 
 function renderCard(){ // функция добавления карточки из массива
-
-const cardItems = initialCards.map(composeCard);
-console.log(cardItems);
-listContainerElement.append(...cardItems);
-
-
+  const cardItems = initialCards.map(composeCard);
+ // console.log(cardItems);
+  listContainerElement.append(...cardItems);
 }
 
 function composeCard(item){ // функция клонирования template, добавления картинки и имени карточки
-const newCard = templateCard.content.cloneNode(true);
-const elementCaption = newCard.querySelector('.element__caption');
-const elementImg = newCard.querySelector('.element__img');
+  const newCard = templateCard.content.cloneNode(true);
+  const elementCaption = newCard.querySelector('.element__caption');
+  const elementImg = newCard.querySelector('.element__img');
+  const elementDelete = newCard.querySelector('.element__delete'); //* delete button
+  const elementLike = newCard.querySelector('.element__like');
 
-elementCaption.textContent = item.name;
-elementImg.setAttribute('src', `${item.link}`);
-elementImg.setAttribute('alt',`${item.name}`);
-return newCard;
+  elementCaption.textContent = item.name;
+  elementImg.setAttribute('src', `${item.link}`);
+  elementImg.setAttribute('alt',`${item.name}`);
+
+  
+  elementLike.addEventListener('click', clickLikeButton);
+  elementDelete.addEventListener('click',clickRemoveButton); //* delete button
+
+  return newCard;
+}
+//****************elementDelete********************* */
+function clickRemoveButton(event){
+  const eventTarget= event.target.closest('.element');
+  eventTarget.remove();
+}
+//************************************************* */
+
+function clickLikeButton(event){
+  const eventTarget = event.target;
+ console.log(eventTarget.classList.toggle('element__like_active'));
+  console.log(event);
 }
 
 renderCard();
+
+
+
+
