@@ -41,6 +41,12 @@
 @import url(../blocks/popup/__field/_type/popup__field_type_name.css);
 @import url(../blocks/popup/__button-submit/popup__button-submit.css);
 
+
+@import url(../blocks/element/__delete/element__delete.css);
+@import url(../blocks/element/__like/_active/element__like_active.css)
+
+
+
 @import url(../blocks/popup/_type/_card/popup_type_card.css);
 @import url(../blocks/popup/__container/_type_card/popup__container_type_card.css);
 @import url(../blocks/popup/__button-close/_type/popup__button-close_type_card.css);
@@ -50,3 +56,4 @@
 @import url(../blocks/popup/__field/_type/popup__field_type_card-link.css);
 @import url(../blocks/popup/__button-submit/_type/popup__button-submit_type_card.css);
 @import url();
+

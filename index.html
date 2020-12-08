@@ -44,6 +44,14 @@
         <button type="submit" class="popup__button-submit button">Сохранить</button>
       </form>
   </div>
+
+  <div class="popup popup_type_img">
+    <form class="popup__container"  name="popup-picture">
+      <div class="popup__container-img" name="popup-picture">
+        <button type="button" class="popup__button-close button" aria-label="Закрыть" id="popup__button-close_img"></button>
+        <img class="element__img" src="" alt ="">
+    </div>
+
   <div class="popup popup_type_card" >
     <form class="popup__container popup__container_type_card " name="card-add">
       <button type="button" class="popup__button-close popup__button-close_type_card button" aria-label="Закрыть"></button>
@@ -53,11 +61,13 @@
         <input class="popup__field popup__field_type_card-link" type="text" placeholder="Ссылка на картинку" aria-label="Ссылка на картинку" name="card-link" required>
       </fieldset>
       <button type="submit" class="popup__button-submit popup__button-submit_type_card  button">Cоздать</button>
+
     </form>
 </div>
   <template class="template">
     <div class="element">
       <img class="element__img" src="" alt ="">
+      <button type="button" class="element__delete button"></button>
       <div class="element__name">
         <h2 class="element__caption"></h2>
         <button class="element__like button"></button>

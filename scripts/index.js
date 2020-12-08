@@ -3,7 +3,11 @@ const profileButtonInfoEddit = document.querySelector('.profile__button-info-edd
 const profileButtonAdd =  document.querySelector('.profile__button-add');
 
 const popup = document.querySelector('.popup');
+
+const popupImg = document.querySelector('.popup_type_img');
+
 const popupCard = document.querySelector('.popup_type_card');
+
 const popupButtonClose = document.querySelector('.popup__button-close');
 const popupButtonCloseCard = document.querySelector('.popup__button-close_type_card');
 
@@ -98,24 +102,66 @@ const initialCards = [
 const listContainerElement = document.querySelector('.elements');
 const templateCard = document.querySelector('.template');
 
-function renderCard(){ // функция добавления карточки из массива
 
+function renderCard(){ // функция добавления карточки из массива
+  const cardItems = initialCards.map(composeCard);
+ // console.log(cardItems);
+  listContainerElement.append(...cardItems);
+}
+
+//<<<<<<< feature/deleteCard
+function composeCard(item){ // функция клонирования template, добавления картинки и имени карточки
+  const newCard = templateCard.content.cloneNode(true);
+  const elementCaption = newCard.querySelector('.element__caption');
+  const elementImg = newCard.querySelector('.element__img');
+  const elementDelete = newCard.querySelector('.element__delete'); //* delete button
+  const elementLike = newCard.querySelector('.element__like');//* like button
+  
+
+  elementCaption.textContent = item.name;
+  elementImg.setAttribute('src', `${item.link}`);
+  elementImg.setAttribute('alt',`${item.name}`);
+
+  
+  elementLike.addEventListener('click', clickLikeButton);
+  elementDelete.addEventListener('click',clickRemoveButton); //* delete button
+  elementImg.addEventListener('click',openPopupImg);
+  popupButtonCloseImg.addEventListener('click', closePopupImg);
+  
+
+  return newCard;
+}
+//****************elementDelete********************* */
+function clickRemoveButton(event){
+  const eventTarget= event.target.closest('.element');
+  eventTarget.remove();
+}
+//************************************************* */
+//=======
 const cardItems = initialCards.map(composeCard);
 //console.log(cardItems);
 listContainerElement.append(...cardItems);
+//>>>>>>> develop
 
-
+function clickLikeButton(event){
+  const eventTarget = event.target;
+  eventTarget.classList.toggle('element__like_active');
 }
 
-function composeCard(item){ // функция клонирования template, добавления картинки и имени карточки
-const newCard = templateCard.content.cloneNode(true);
-const elementCaption = newCard.querySelector('.element__caption');
-const elementImg = newCard.querySelector('.element__img');
+function openPopupImg(event){
+  const eventTarget = event.target;
+  popupImg.classList.add('popup_visible');
+}
 
-elementCaption.textContent = item.name;
-elementImg.setAttribute('src', `${item.link}`);
-elementImg.setAttribute('alt',`${item.name}`);
-return newCard;
+const popupButtonCloseImg = document.querySelector('#popup__button-close_img');
+//console.log(popupButtonCloseImg);
+function closePopupImg(event){
+  popupImg.classList.remove('popup_visible');
+  document.querySelector('.')
 }
 
 renderCard();
+
+
+
+
