@@ -1,8 +1,15 @@
 //******Открытие и закрытие popup окна*****************************//
 const profileButtonInfoEddit = document.querySelector('.profile__button-info-eddit');
+const profileButtonAdd =  document.querySelector('.profile__button-add');
+
 const popup = document.querySelector('.popup');
+
 const popupImg = document.querySelector('.popup_type_img');
+
+const popupCard = document.querySelector('.popup_type_card');
+
 const popupButtonClose = document.querySelector('.popup__button-close');
+const popupButtonCloseCard = document.querySelector('.popup__button-close_type_card');
 
 const popupContainer = document.querySelector('.popup__container');
 const nameInput = popupContainer.querySelector('.popup__field_type_name');
@@ -11,14 +18,40 @@ const jobInput =popupContainer.querySelector('.popup__field_type_job');
 const profileInfoNameNode = document.querySelector('.profile__info-name');
 const profileInfoJobNode = document.querySelector('.profile__info-job');
 
-function openPopup() {
-  popup.classList.add('popup_visible');
+function openPopup(event) {
+  const clickProfileButtonInfoEddit = event.target.getAttribute('class').includes('profile__button-info-eddit');
+  const clickProfileButtonAdd = event.target.getAttribute('class').includes('profile__button-add');
+
+  if (clickProfileButtonInfoEddit === true){
+    popup.classList.add('popup_visible');
+    console.log('условие открытия edit формы  выполнилось');
+  }
+  if (clickProfileButtonAdd === true){
+    popupCard.classList.add('popup_visible');
+    console.log('условие открытия card формы  выполнилось');
+  }
+
   nameInput.value = profileInfoNameNode.textContent;
   jobInput.value = profileInfoJobNode.textContent;
+
 }
 
-function closePopup() {
-  popup.classList.remove('popup_visible');
+
+
+function closePopup(event) {
+  const clickPopupButtonClose = event.target.getAttribute('class').includes('popup__button-close')
+  const clickPopupButtonCloseCard =event.target.getAttribute('class').includes('popup__button-close_type_card');
+
+  if (clickPopupButtonClose === true){
+    popup.classList.remove('popup_visible');
+    console.log('условие закрытия edit формы  выполнилось');
+  }
+
+  if (clickPopupButtonCloseCard === true){
+    popupCard.classList.remove('popup_visible');
+    console.log('условие закрытия сard формы  выполнилось');
+  }
+
 }
 
 function formSubmitHandler (evt) {
@@ -31,7 +64,10 @@ function formSubmitHandler (evt) {
 }
 
 profileButtonInfoEddit.addEventListener('click', openPopup );
+profileButtonAdd.addEventListener('click', openPopup);
 popupButtonClose.addEventListener('click', closePopup );
+popupButtonCloseCard.addEventListener('click', closePopup);
+
 popupContainer.addEventListener('submit', formSubmitHandler);// Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 
 //!_____________________________________________________________________________________________________________________________________________________/
@@ -73,6 +109,7 @@ function renderCard(){ // функция добавления карточки �
   listContainerElement.append(...cardItems);
 }
 
+//<<<<<<< feature/deleteCard
 function composeCard(item){ // функция клонирования template, добавления картинки и имени карточки
   const newCard = templateCard.content.cloneNode(true);
   const elementCaption = newCard.querySelector('.element__caption');
@@ -100,6 +137,11 @@ function clickRemoveButton(event){
   eventTarget.remove();
 }
 //************************************************* */
+//=======
+const cardItems = initialCards.map(composeCard);
+//console.log(cardItems);
+listContainerElement.append(...cardItems);
+//>>>>>>> develop
 
 function clickLikeButton(event){
   const eventTarget = event.target;
