@@ -1,6 +1,7 @@
 //******Открытие и закрытие popup окна*****************************//
 const profileButtonInfoEddit = document.querySelector('.profile__button-info-eddit');
 const popup = document.querySelector('.popup');
+const popupImg = document.querySelector('.popup_type_img');
 const popupButtonClose = document.querySelector('.popup__button-close');
 
 const popupContainer = document.querySelector('.popup__container');
@@ -65,6 +66,7 @@ const initialCards = [
 const listContainerElement = document.querySelector('.elements');
 const templateCard = document.querySelector('.template');
 
+
 function renderCard(){ // функция добавления карточки из массива
   const cardItems = initialCards.map(composeCard);
  // console.log(cardItems);
@@ -76,7 +78,8 @@ function composeCard(item){ // функция клонирования template,
   const elementCaption = newCard.querySelector('.element__caption');
   const elementImg = newCard.querySelector('.element__img');
   const elementDelete = newCard.querySelector('.element__delete'); //* delete button
-  const elementLike = newCard.querySelector('.element__like');
+  const elementLike = newCard.querySelector('.element__like');//* like button
+  
 
   elementCaption.textContent = item.name;
   elementImg.setAttribute('src', `${item.link}`);
@@ -85,6 +88,9 @@ function composeCard(item){ // функция клонирования template,
   
   elementLike.addEventListener('click', clickLikeButton);
   elementDelete.addEventListener('click',clickRemoveButton); //* delete button
+  elementImg.addEventListener('click',openPopupImg);
+  popupButtonCloseImg.addEventListener('click', closePopupImg);
+  
 
   return newCard;
 }
@@ -97,8 +103,19 @@ function clickRemoveButton(event){
 
 function clickLikeButton(event){
   const eventTarget = event.target;
- console.log(eventTarget.classList.toggle('element__like_active'));
-  console.log(event);
+  eventTarget.classList.toggle('element__like_active');
+}
+
+function openPopupImg(event){
+  const eventTarget = event.target;
+  popupImg.classList.add('popup_visible');
+}
+
+const popupButtonCloseImg = document.querySelector('#popup__button-close_img');
+//console.log(popupButtonCloseImg);
+function closePopupImg(event){
+  popupImg.classList.remove('popup_visible');
+  document.querySelector('.')
 }
 
 renderCard();
