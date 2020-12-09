@@ -11,11 +11,7 @@
   padding: 0;
 }
 
-.element__like:active {
-  background-image: url(../__like/like-active.svg);
-  border: none;
-  opacity: 1;
-}
+
 
 .element__like:hover {
   border: none;
