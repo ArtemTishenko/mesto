@@ -35,10 +35,14 @@ function closePopupEdditForm(){
   popupEditForm.classList.remove('popup_visible');
 }
 function openPopupCard(){
+  popupContainerCardName.value = "";
+  popupContainerCardLink.value = "";
+
   popupCard.classList.add('popup_visible');
 }
 function closePopupCard(){
   popupCard.classList.remove('popup_visible');
+
 }
 
 
@@ -117,7 +121,7 @@ function addNewCard (event) {
 
 }
 
-popupContainerCard.addEventListener('submit',addNewCard);
+popupContainerCard.addEventListener('submit', addNewCard);
 
 function composeCard(item){ // функция клонирования template, добавления картинки и имени карточки
   const newCard = templateCard.content.cloneNode(true);
