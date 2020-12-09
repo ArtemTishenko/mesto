@@ -58,5 +58,5 @@
 @import url(../blocks/popup/_type/popup_type_edit-form.css);
 @import url(../blocks/popup/__button-close/_type/popup__button-close_type_img.css);
 @import url(../blocks/popup/__container-img/popup__container-img.css);
-@import url(../blocks/popup/__img-caption/popup__img-caption.css);
-@import url(../blocks/popup/__img/popup__img.css);
+@import url(../blocks/popup/__picture-caption/popup__picture-caption.css);
+@import url(../blocks/popup/__picture/popup__picture.css);

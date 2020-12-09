@@ -135,10 +135,14 @@ function composeCard(item){ // функция клонирования template,
   elementImg.setAttribute('src', `${item.link}`);
   elementImg.setAttribute('alt',`${item.name}`);
 
-
+  const elementImgSrc = elementImg.getAttribute('src');
+  const elementImgAlt = elementImg.getAttribute('alt');
+  //console.log('elementImgSrc ' + elementImgSrc);
+  //console.log('elementImgAlt ' + elementImgAlt);
 
   elementDelete.addEventListener('click',clickRemoveButton); //* delete button
-  elementLike.addEventListener('click', clickLikeButton);
+  elementLike.addEventListener('click', clickLikeButton);//* like button
+
   elementImg.addEventListener('click',openPopupImg);
   popupButtonCloseImg.addEventListener('click', closePopupImg);
 
@@ -147,9 +151,19 @@ function composeCard(item){ // функция клонирования template,
 }
 
 
-function openPopupImg(){
-  popupImg.classList.add('popup_visible');
+function openPopupImg(event){
+  const popupPicture = popupImg.querySelector('.popup__picture');
+  const popupPictureCaption = popupImg.querySelector('.popup__picture-caption');
 
+  const eventTargetSrc = event.target.getAttribute('src');
+  const ecentTargetAlt = event.target.getAttribute('alt');
+  const eventTargetCaption = event.target.parentElement.querySelector('.element__caption').innerHTML ;
+
+  popupPicture.setAttribute('src', eventTargetSrc);
+  popupPictureCaption.setAttribute('alt',ecentTargetAlt);
+  popupPictureCaption.textContent = eventTargetCaption;
+
+  popupImg.classList.add('popup_visible');
 }
 
 function closePopupImg(){
