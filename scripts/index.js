@@ -78,11 +78,11 @@ function openPopupImg(event){
   const popupPictureCaption = popupImg.querySelector('.popup__picture-caption');
 
   const eventTargetSrc = event.target.getAttribute('src');
-  const ecentTargetAlt = event.target.getAttribute('alt');
+  const eventTargetAlt = event.target.getAttribute('alt');
   const eventTargetCaption = event.target.parentElement.querySelector('.element__caption').innerHTML ;
 
   popupPicture.setAttribute('src', eventTargetSrc);
-  popupPictureCaption.setAttribute('alt',ecentTargetAlt);
+  popupPicture.setAttribute('alt', eventTargetAlt);
   popupPictureCaption.textContent = eventTargetCaption;
 
   popupImg.classList.add('popup_visible');
