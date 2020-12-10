@@ -1,8 +1,7 @@
-//******Открытие и закрытие popup окна*****************************//
 const profileButtonInfoEddit = document.querySelector('.profile__button-info-eddit');
 const profileButtonAdd =  document.querySelector('.profile__button-add');
 
-const popupEditForm = document.querySelector('.popup_type_edit-form'); // const popup
+const popupEditForm = document.querySelector('.popup_type_edit-form');
 
 const popupImg = document.querySelector('.popup_type_img');
 const popupButtonCloseImg = document.querySelector('#popup__button-close_img'); // при обращении через id не нужно формировать файловую структуру по БЭМ
@@ -24,48 +23,8 @@ const popupContainerCardLink = popupContainerCard.querySelector('.popup__field_t
 const profileInfoNameNode = document.querySelector('.profile__info-name');
 const profileInfoJobNode = document.querySelector('.profile__info-job');
 
-
-function openPopupEdditForm(){
-  popupEditForm.classList.add('popup_visible');
-
-  nameInput.value = profileInfoNameNode.textContent; //подтяжка с profile-info в форму
-  jobInput.value = profileInfoJobNode.textContent;
-}
-function closePopupEdditForm(){
-  popupEditForm.classList.remove('popup_visible');
-}
-function openPopupCard(){
-  popupContainerCardName.value = "";
-  popupContainerCardLink.value = "";
-
-  popupCard.classList.add('popup_visible');
-}
-function closePopupCard(){
-  popupCard.classList.remove('popup_visible');
-
-}
-
-
-function formSubmitHandler (event) {
-  event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки
-
-  profileInfoNameNode.textContent=nameInput.value;// Вставляем новые значения с помощью textContent
-  profileInfoJobNode.textContent=jobInput.value;
-
-  closePopupEdditForm();
-}
-
-
-
-profileButtonInfoEddit.addEventListener('click', openPopupEdditForm );
-profileButtonAdd.addEventListener('click', openPopupCard);
-popupButtonClose.addEventListener('click', closePopupEdditForm );
-popupButtonCloseCard.addEventListener('click', closePopupCard);
-
-popupContainerEdditForm.addEventListener('submit', formSubmitHandler);// Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
-
-
-//!_____________________________________________________________________________________________________________________________________________________/
+const listContainerElement = document.querySelector('.elements');
+const templateCard = document.querySelector('.template');
 
 const initialCards = [
   {
@@ -94,15 +53,53 @@ const initialCards = [
   }
 ];
 
-const listContainerElement = document.querySelector('.elements');
-const templateCard = document.querySelector('.template');
+//*****************************Открытие и закрытие popup окон*****************************//
+function openPopupEdditForm(){
+  popupEditForm.classList.add('popup_visible');
 
-
-function renderCard(){ // функция добавления карточки из массива
-  const cardItems = initialCards.map(composeCard);
-  listContainerElement.append(...cardItems);
+  nameInput.value = profileInfoNameNode.textContent; //подтяжка с profile-info в форму
+  jobInput.value = profileInfoJobNode.textContent;
 }
+function closePopupEdditForm(){
+  popupEditForm.classList.remove('popup_visible');
+}
+function openPopupCard(){
+  popupContainerCardName.value = "";
+  popupContainerCardLink.value = "";
 
+  popupCard.classList.add('popup_visible');
+}
+function closePopupCard(){
+  popupCard.classList.remove('popup_visible');
+
+}
+function openPopupImg(event){
+  const popupPicture = popupImg.querySelector('.popup__picture');
+  const popupPictureCaption = popupImg.querySelector('.popup__picture-caption');
+
+  const eventTargetSrc = event.target.getAttribute('src');
+  const ecentTargetAlt = event.target.getAttribute('alt');
+  const eventTargetCaption = event.target.parentElement.querySelector('.element__caption').innerHTML ;
+
+  popupPicture.setAttribute('src', eventTargetSrc);
+  popupPictureCaption.setAttribute('alt',ecentTargetAlt);
+  popupPictureCaption.textContent = eventTargetCaption;
+
+  popupImg.classList.add('popup_visible');
+}
+function closePopupImg(){
+  popupImg.classList.remove('popup_visible');
+}
+//*************************************************************************************** //
+
+function formSubmitHandler (event) {
+  event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки
+
+  profileInfoNameNode.textContent=nameInput.value;// Вставляем новые значения с помощью textContent
+  profileInfoJobNode.textContent=jobInput.value;
+
+  closePopupEdditForm();
+}
 function addNewCard (event) {
   event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки
   let newCardElement = [];
@@ -115,15 +112,16 @@ function addNewCard (event) {
   let newCarItem = newCardElement.map(composeCard);
   listContainerElement.prepend(...newCarItem);
 
-  console.log(newCardElement);
   composeCard(newCardElement);
   closePopupCard();
-
 }
 
-popupContainerCard.addEventListener('submit', addNewCard);
+function renderCard(){ // функция добавления карточки из массива
+  const cardItems = initialCards.map(composeCard);
+  listContainerElement.append(...cardItems);
+}
 
-function composeCard(item){ // функция клонирования template, добавления картинки и имени карточки
+function composeCard(item){ // Функция клонирования template, добавления картинки и имени карточки
   const newCard = templateCard.content.cloneNode(true);
   const elementCaption = newCard.querySelector('.element__caption');
   const elementImg = newCard.querySelector('.element__img');
@@ -151,42 +149,24 @@ function composeCard(item){ // функция клонирования template,
 }
 
 
-function openPopupImg(event){
-  const popupPicture = popupImg.querySelector('.popup__picture');
-  const popupPictureCaption = popupImg.querySelector('.popup__picture-caption');
-
-  const eventTargetSrc = event.target.getAttribute('src');
-  const ecentTargetAlt = event.target.getAttribute('alt');
-  const eventTargetCaption = event.target.parentElement.querySelector('.element__caption').innerHTML ;
-
-  popupPicture.setAttribute('src', eventTargetSrc);
-  popupPictureCaption.setAttribute('alt',ecentTargetAlt);
-  popupPictureCaption.textContent = eventTargetCaption;
-
-  popupImg.classList.add('popup_visible');
-}
-
-function closePopupImg(){
-  popupImg.classList.remove('popup_visible');
-}
-
-
-//****************RemoveCard********************* */
-function clickRemoveButton(event){
+function clickRemoveButton(event){ //Функция удления карточки
   const eventTarget= event.target.closest('.element');
   eventTarget.remove();
 }
-//************************************************* */
 
-//****************Like********************* */
-function clickLikeButton(event){
+function clickLikeButton(event){ //Функция установки like
   const eventTarget = event.target;
   eventTarget.classList.toggle('element__like_active');
 }
-//************************************************* */
 
+profileButtonInfoEddit.addEventListener('click', openPopupEdditForm );
+profileButtonAdd.addEventListener('click', openPopupCard);
+popupButtonClose.addEventListener('click', closePopupEdditForm );
+popupButtonCloseCard.addEventListener('click', closePopupCard);
 
-
+// Прикрепляем обработчики к форме: он будет следить за событием “submit” - «отправка»
+popupContainerEdditForm.addEventListener('submit', formSubmitHandler);
+popupContainerCard.addEventListener('submit', addNewCard);
 
 renderCard();
 
