@@ -69,10 +69,8 @@ function openPopupEdditForm(){
   openModal(popupEditForm);
 }
 function openPopupCard(){
-
   popupContainerCardName.value = "";
   popupContainerCardLink.value = "";
-
 
   openModal(popupCard);
 }
