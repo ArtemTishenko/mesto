@@ -1,0 +1,6 @@
+.popup__field-error {
+  margin: 0 0 13px 36px;
+  color: red;
+  display: flex;
+  align-self: flex-start;
+}
