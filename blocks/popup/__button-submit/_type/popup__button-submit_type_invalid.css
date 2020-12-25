@@ -1,0 +1,7 @@
+.popup__button-submit_type_invalid{
+    opacity: 0.2;
+}
+.popup__button-submit_type_invalid:hover{
+    opacity: 0.2;
+    cursor: not-allowed;
+}

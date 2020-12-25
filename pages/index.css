@@ -62,3 +62,7 @@
 @import url(../blocks/popup/__picture/popup__picture.css);
 
 @import url(../blocks/popup/__field-error/popup__field-error.css);
+@import url(../blocks/popup/__field/_type/popup__field_type_error.css);
+@import url(../blocks/popup/__button-submit/_type/popup__button-submit_type_invalid.css);
+
+@import url(../blocks/popup/__container/_type/popup__container_type_form.css);
