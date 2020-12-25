@@ -85,7 +85,7 @@ function openModal(dompopup) {
   enableValidation(validationConfig); // использована функция проверки валидации для того, что бы в popup окне редактирования профиля кнопка была активна, т.к в input заносится иформация c openPopupEddit form
 }
 function closeModal(dompopup) {
-    dompopup.classList.remove("popup_visible");
+  dompopup.classList.remove("popup_visible");
 }
 function openPopupEdditForm() {
   nameInput.value = profileInfoNameNode.textContent; //подтяжка с profile-info в форму
@@ -102,7 +102,9 @@ function openPopupCard() {
 function openPopupImg(event) {
   const eventTargetSrc = event.target.getAttribute("src");
   const eventTargetAlt = event.target.getAttribute("alt");
-  const eventTargetCaption = event.target.parentElement.querySelector(".element__caption").innerHTML;
+  const eventTargetCaption = event.target.parentElement.querySelector(
+    ".element__caption"
+  ).innerHTML;
 
   popupPicture.setAttribute("src", eventTargetSrc);
   popupPicture.setAttribute("alt", eventTargetAlt);
@@ -171,39 +173,33 @@ popupButtonClose.addEventListener("click", function (evt) {
   closeModal(popupEditForm);
 });
 
-
-
-document.addEventListener("keydown", function(evt){//*****ЗАКРЫТИЕ на Escape */
-  if(evt.key === "Escape" ){
+document.addEventListener("keydown", function (evt) {
+  //*****ЗАКРЫТИЕ на Escape */
+  if (evt.key === "Escape") {
     closeModal(popupEditForm);
     closeModal(popupCard);
     closeModal(popupImg);
   }
 });
 
-function closeByOverlay (){//*****ЗАКРЫТИЕ на Overlay */
-  const overlay = document.querySelectorAll('.popup');
-  overlay.forEach(function (itemPopup){
-    const popupContainerForm = itemPopup.querySelector('.popup__container');
-    popupContainerForm.addEventListener('click', (event) => {
+function closeByOverlay() {
+  //*****ЗАКРЫТИЕ на Overlay */
+  const overlay = document.querySelectorAll(".popup");
+  overlay.forEach(function (itemPopup) {
+    const popupContainerForm = itemPopup.querySelector(".popup__container");
+    popupContainerForm.addEventListener("click", (event) => {
       event.stopImmediatePropagation();
     });
-  
+
     itemPopup.addEventListener("click", (event) => {
-      closeModal(itemPopup); 
-    })
-  
-    popupContainerForm.addEventListener('click', (event) => {
+      closeModal(itemPopup);
+    });
+
+    popupContainerForm.addEventListener("click", (event) => {
       event.stopImmediatePropagation();
     });
   });
 }
-
-
-
-
-
-
 
 popupButtonCloseCard.addEventListener("click", function () {
   closeModal(popupCard);
@@ -212,7 +208,6 @@ popupButtonCloseImg.addEventListener("click", function () {
   closeModal(popupImg);
 });
 // Прикрепляем обработчики к форме: он будет следить за событием “submit” - «отправка»
-
 
 popupContainerEdditForm.addEventListener("submit", formSubmitHandler);
 popupContainerCard.addEventListener("submit", addNewCard);
