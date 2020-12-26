@@ -79,25 +79,55 @@ const initialCards = [
   },
 ];
 
+const validationSelect = {
+  popupEditForm: ".popup_type_edit-form",
+  popupCard: ".popup_type_card",
+  popupImg: ".popup_type_img",
+};
+const formsStates = {
+  // false - close, true - open
+  popupEditForm: false,
+  popupCard: false,
+  popupImg: false,
+  itemPopup: false,
+};
 //*****************************Открытие и закрытие popup окон*****************************//
-function openModal(dompopup) {
-  dompopup.classList.add("popup_visible");
-  enableValidation(validationConfig); // использована функция проверки валидации для того, что бы в popup окне редактирования профиля кнопка была активна, т.к в input заносится иформация c openPopupEddit form
-}
-function closeModal(dompopup) {
-  dompopup.classList.remove("popup_visible");
+
+function handleModal(dompopup) {
+  const formsList = Object.keys(dompopup);
+  formsList.forEach((item) => {
+    const domItem = document.querySelector(validationSelect[item]);
+
+    if (domItem) {
+      if (!dompopup[item]) {
+        domItem.classList.remove("popup_visible");
+      } else {
+        domItem.classList.add("popup_visible");
+
+        enableValidation(validationConfig); // использована функция проверки валидации для того, что бы в popup окне редактирования профиля кнопка была активна, т.к в input заносится иформация c openPopupEddit form
+        closeByOverlay();
+      }
+    }
+  });
+  closePopupEscape();
 }
 function openPopupEdditForm() {
   nameInput.value = profileInfoNameNode.textContent; //подтяжка с profile-info в форму
   jobInput.value = profileInfoJobNode.textContent;
-
-  openModal(popupEditForm);
+  const openedForms = {
+    ...formsStates,
+    popupEditForm: true,
+  };
+  handleModal(openedForms);
 }
 function openPopupCard() {
-  popupContainerCardName.value = "";
-  popupContainerCardLink.value = "";
-
-  openModal(popupCard);
+  const Example = document.querySelector(validationConfig.formSelectorForm);
+  Example.reset();
+  const openedForms = {
+    ...formsStates,
+    popupCard: true,
+  };
+  handleModal(openedForms);
 }
 function openPopupImg(event) {
   const eventTargetSrc = event.target.getAttribute("src");
@@ -110,17 +140,23 @@ function openPopupImg(event) {
   popupPicture.setAttribute("alt", eventTargetAlt);
   popupPictureCaption.textContent = eventTargetCaption;
 
-  openModal(popupImg);
+  const openedForms = {
+    ...formsStates,
+    popupImg: true,
+  };
+  handleModal(openedForms);
 }
 //*************************************************************************************** //
-function formSubmitHandler(event) {
-  //event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки
-
+function formSubmitHandler() {
   profileInfoNameNode.textContent = nameInput.value; // Вставляем новые значения с помощью textContent
   profileInfoJobNode.textContent = jobInput.value;
-
-  closeModal(popupEditForm);
+  const closedForms = {
+    ...formsStates,
+    popupEditForm: false,
+  };
+  handleModal(closedForms);
 }
+
 function addNewCard(event) {
   event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки
 
@@ -130,7 +166,11 @@ function addNewCard(event) {
   const newCarItem = composeCard({ name: newCardName, link: newCardLink });
   listContainerElement.prepend(newCarItem);
 
-  closeModal(popupCard);
+  const closedForms = {
+    ...formsStates,
+    popupCard: false,
+  };
+  handleModal(closedForms);
 }
 function renderCard() {
   // функция добавления карточки из массива
@@ -158,29 +198,12 @@ function composeCard(item) {
 }
 function clickRemoveButton(event) {
   //Функция удления карточки
-  const eventTarget = event.target.closest(".element");
-  eventTarget.remove();
+  event.target.closest(".element").remove();
 }
 function clickLikeButton(event) {
   //Функция установки like
-  const eventTarget = event.target;
-  eventTarget.classList.toggle("element__like_active");
+  event.target.classList.toggle("element__like_active");
 }
-
-profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
-profileButtonAdd.addEventListener("click", openPopupCard);
-popupButtonClose.addEventListener("click", function (evt) {
-  closeModal(popupEditForm);
-});
-
-document.addEventListener("keydown", function (evt) {
-  //*****ЗАКРЫТИЕ на Escape */
-  if (evt.key === "Escape") {
-    closeModal(popupEditForm);
-    closeModal(popupCard);
-    closeModal(popupImg);
-  }
-});
 
 function closeByOverlay() {
   //*****ЗАКРЫТИЕ на Overlay */
@@ -192,7 +215,11 @@ function closeByOverlay() {
     });
 
     itemPopup.addEventListener("click", (event) => {
-      closeModal(itemPopup);
+      const closedForms = {
+        ...formsStates,
+        itemPopup: false,
+      };
+      handleModal(closedForms);
     });
 
     popupContainerForm.addEventListener("click", (event) => {
@@ -202,15 +229,48 @@ function closeByOverlay() {
 }
 
 popupButtonCloseCard.addEventListener("click", function () {
-  closeModal(popupCard);
+  const closedForms = {
+    ...formsStates,
+    popupCard: false,
+  };
+  handleModal(closedForms);
 });
 popupButtonCloseImg.addEventListener("click", function () {
-  closeModal(popupImg);
+  const closedForms = {
+    ...formsStates,
+    popupImg: false,
+  };
+  handleModal(closedForms);
 });
 // Прикрепляем обработчики к форме: он будет следить за событием “submit” - «отправка»
 
 popupContainerEdditForm.addEventListener("submit", formSubmitHandler);
 popupContainerCard.addEventListener("submit", addNewCard);
 
+profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
+profileButtonAdd.addEventListener("click", openPopupCard);
+popupButtonClose.addEventListener("click", function () {
+  const closedForms = {
+    ...formsStates,
+    popupEditForm: false,
+  };
+  handleModal(closedForms);
+});
+
+//*****ЗАКРЫТИЕ на Escape */
+function closePopupEscape() {
+  document.addEventListener("keydown", function (evt) {
+    if (evt.key === "Escape") {
+      const closedForms = {
+        ...formsStates, //
+        popupEditForm: false,
+        popupCard: false,
+        popupImg: false,
+        overlay: false,
+      };
+      handleModal(formsStates);
+    }
+  });
+}
+
 renderCard();
-closeByOverlay();

@@ -1,5 +1,6 @@
 const validationConfig = {
   formSelector: ".popup__container_type_form",
+  formSelectorForm:".popup_type_card .popup__container_type_form",
   inputSelector: ".popup__field",
   submitButtonSelector: ".popup__button-submit",
   inactiveButtonClass: "popup__button-submit_type_invalid",
