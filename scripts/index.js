@@ -80,12 +80,19 @@ const initialCards = [
 ];
 
 //*****************************Открытие и закрытие popup окон*****************************//
+
 function openModal(dompopup) {
   dompopup.classList.add("popup_visible");
   enableValidation(validationConfig); // использована функция проверки валидации для того, что бы в popup окне редактирования профиля кнопка была активна, т.к в input заносится иформация c openPopupEddit form
+
+  document.addEventListener("click", closeByOverlay);
+  document.addEventListener("keydown", closePopupByEscape);
 }
 function closeModal(dompopup) {
   dompopup.classList.remove("popup_visible");
+
+  document.removeEventListener("keydown", closePopupByEscape);
+  document.removeEventListener("click", closeByOverlay);
 }
 function openPopupEdditForm() {
   nameInput.value = profileInfoNameNode.textContent; //подтяжка с profile-info в форму
@@ -112,10 +119,7 @@ function openPopupImg(event) {
 
   openModal(popupImg);
 }
-//*************************************************************************************** //
-function formSubmitHandler(event) {
-  //event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки
-
+function formSubmitHandler() {
   profileInfoNameNode.textContent = nameInput.value; // Вставляем новые значения с помощью textContent
   profileInfoJobNode.textContent = jobInput.value;
 
@@ -158,49 +162,43 @@ function composeCard(item) {
 }
 function clickRemoveButton(event) {
   //Функция удления карточки
-  const eventTarget = event.target.closest(".element");
-  eventTarget.remove();
+  event.target.closest(".element").remove();
 }
 function clickLikeButton(event) {
   //Функция установки like
-  const eventTarget = event.target;
-  eventTarget.classList.toggle("element__like_active");
+
+  event.target.classList.toggle("element__like_active");
 }
-
-profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
-profileButtonAdd.addEventListener("click", openPopupCard);
-popupButtonClose.addEventListener("click", function (evt) {
-  closeModal(popupEditForm);
-});
-
-document.addEventListener("keydown", function (evt) {
-  //*****ЗАКРЫТИЕ на Escape */
-  if (evt.key === "Escape") {
-    closeModal(popupEditForm);
-    closeModal(popupCard);
-    closeModal(popupImg);
-  }
-});
-
+//______________________ФУНКЦИИ ЗАКРЫТИЯ POPUP________________________________
 function closeByOverlay() {
   //*****ЗАКРЫТИЕ на Overlay */
+
   const overlay = document.querySelectorAll(".popup");
   overlay.forEach(function (itemPopup) {
     const popupContainerForm = itemPopup.querySelector(".popup__container");
+
     popupContainerForm.addEventListener("click", (event) => {
       event.stopImmediatePropagation();
     });
 
-    itemPopup.addEventListener("click", (event) => {
+    function closePopupByOverlay() {
       closeModal(itemPopup);
-    });
+    }
 
-    popupContainerForm.addEventListener("click", (event) => {
-      event.stopImmediatePropagation();
-    });
+    itemPopup.addEventListener("click", closePopupByOverlay);
   });
 }
 
+function closePopupByEscape(evt) {
+  const popupActive = document.querySelector(".popup_visible");
+
+  if (evt.key === "Escape") {
+    closeModal(popupActive);
+  }
+}
+//_____________________________________________________________________________
+
+//-----------------Обработчики---------------------------------//
 popupButtonCloseCard.addEventListener("click", function () {
   closeModal(popupCard);
 });
@@ -211,6 +209,12 @@ popupButtonCloseImg.addEventListener("click", function () {
 
 popupContainerEdditForm.addEventListener("submit", formSubmitHandler);
 popupContainerCard.addEventListener("submit", addNewCard);
+//_________________________________________________________________________________
+profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
+profileButtonAdd.addEventListener("click", openPopupCard);
+popupButtonClose.addEventListener("click", function (evt) {
+  closeModal(popupEditForm);
+});
+//____________________________________________________________________________________
 
 renderCard();
-closeByOverlay();
