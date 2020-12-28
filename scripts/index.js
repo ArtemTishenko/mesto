@@ -26,10 +26,6 @@ const templateCard = document.querySelector(".template");
 const popupPicture = popupImg.querySelector(".popup__picture");
 const popupPictureCaption = popupImg.querySelector(".popup__picture-caption");
 
-//********************************************* */
-const popup = document.querySelector(".popup")
-//********************************************* */
-
 const initialCards = [
   {
     name: "Архыз",
