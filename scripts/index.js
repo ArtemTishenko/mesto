@@ -1,41 +1,21 @@
-const profileButtonInfoEddit = document.querySelector(
-  ".profile__button-info-eddit"
-);
+const profileButtonInfoEddit = document.querySelector(".profile__button-info-eddit");
 const profileButtonAdd = document.querySelector(".profile__button-add");
-
 const popupEditForm = document.querySelector(".popup_type_edit-form");
-
 const popupImg = document.querySelector(".popup_type_img");
 const popupButtonCloseImg = document.querySelector("#popup__button-close_img"); // при обращении через id не нужно формировать файловую структуру по БЭМ
 
 const popupCard = document.querySelector(".popup_type_card");
 
-const popupButtonClose = document.querySelector(
-  ".popup__button-close_type_eddit-form"
-);
-const popupButtonCloseCard = document.querySelector(
-  ".popup__button-close_type_card"
-);
+const popupButtonClose = document.querySelector(".popup__button-close_type_eddit-form");
+const popupButtonCloseCard = document.querySelector(".popup__button-close_type_card");
 
-const popupContainerEdditForm = document.querySelector(
-  ".popup__container_type_eddit-form"
-);
-const nameInput = popupContainerEdditForm.querySelector(
-  ".popup__field_type_name"
-);
-const jobInput = popupContainerEdditForm.querySelector(
-  ".popup__field_type_job"
-);
+const popupContainerEdditForm = document.querySelector(".popup__container_type_eddit-form");
+const nameInput = popupContainerEdditForm.querySelector(".popup__field_type_name");
+const jobInput = popupContainerEdditForm.querySelector(".popup__field_type_job");
 
-const popupContainerCard = document.querySelector(
-  ".popup__container_type_card"
-);
-const popupContainerCardName = popupContainerCard.querySelector(
-  ".popup__field_type_card-name"
-);
-const popupContainerCardLink = popupContainerCard.querySelector(
-  ".popup__field_type_card-link"
-);
+const popupContainerCard = document.querySelector(".popup__container_type_card");
+const popupContainerCardName = popupContainerCard.querySelector(".popup__field_type_card-name");
+const popupContainerCardLink = popupContainerCard.querySelector(".popup__field_type_card-link");
 
 const profileInfoNameNode = document.querySelector(".profile__info-name");
 const profileInfoJobNode = document.querySelector(".profile__info-job");
@@ -45,6 +25,10 @@ const templateCard = document.querySelector(".template");
 
 const popupPicture = popupImg.querySelector(".popup__picture");
 const popupPictureCaption = popupImg.querySelector(".popup__picture-caption");
+
+//********************************************* */
+const popup = document.querySelector(".popup")
+//********************************************* */
 
 const initialCards = [
   {
@@ -93,6 +77,7 @@ function closeModal(dompopup) {
 
   document.removeEventListener("keydown", closePopupByEscape);
   document.removeEventListener("click", closeByOverlay);
+
 }
 function openPopupEdditForm() {
   nameInput.value = profileInfoNameNode.textContent; //подтяжка с profile-info в форму
@@ -136,13 +121,13 @@ function addNewCard(event) {
 
   closeModal(popupCard);
 }
-function renderCard() {
-  // функция добавления карточки из массива
+function renderCard() {// функция добавления карточки из массива
+
   const cardItems = initialCards.map(composeCard);
   listContainerElement.append(...cardItems);
 }
-function composeCard(item) {
-  // Функция клонирования template, добавления картинки и имени карточки
+function composeCard(item) {// Функция клонирования template, добавления картинки и имени карточки
+
   const newCard = templateCard.content.cloneNode(true);
   const elementCaption = newCard.querySelector(".element__caption");
   const elementImg = newCard.querySelector(".element__img");
@@ -170,28 +155,18 @@ function clickLikeButton(event) {
   event.target.classList.toggle("element__like_active");
 }
 //______________________ФУНКЦИИ ЗАКРЫТИЯ POPUP________________________________
-function closeByOverlay() {
-  //*****ЗАКРЫТИЕ на Overlay */
+function checkClassOverlay(overlay){
+  return overlay.classList.contains('popup_visible');
+}
 
-  const overlay = document.querySelectorAll(".popup");
-  overlay.forEach(function (itemPopup) {
-    const popupContainerForm = itemPopup.querySelector(".popup__container");
-
-    popupContainerForm.addEventListener("click", (event) => {
-      event.stopImmediatePropagation();
-    });
-
-    function closePopupByOverlay() {
-      closeModal(itemPopup);
-    }
-
-    itemPopup.addEventListener("click", closePopupByOverlay);
-  });
+function closeByOverlay(evt){
+  if (checkClassOverlay(evt.target)){
+    closeModal(evt.target)
+  }
 }
 
 function closePopupByEscape(evt) {
   const popupActive = document.querySelector(".popup_visible");
-
   if (evt.key === "Escape") {
     closeModal(popupActive);
   }
