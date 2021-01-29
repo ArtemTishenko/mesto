@@ -1,6 +1,6 @@
-import { Card } from "./card.js";
+import { Card } from "../scripts/card.js";
 //import {validationConfig} from "./validate.js";
-import {FormValidator} from "./formValidator.js"
+import {FormValidator} from "../scripts/formValidator.js"
 export const validationConfig = {
   formSelector: ".popup__container_type_form",
   formSelectorForm:".popup_type_card popup__container_type_eddit-form",//! проверить .popup__container_type_form заменить на popup__container_type_eddit-form

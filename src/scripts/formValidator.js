@@ -1,4 +1,4 @@
-import {validationConfig} from './index.js'
+import {validationConfig} from '../../src/pages/index.js'
 
 export class FormValidator {
   constructor(validationConfig, validationForm) {
