@@ -134,13 +134,7 @@ const initialCards = [
      closeModal(popupActive);
    }
  }
-//  function generateDefaultCard(initialCards) {// функция добавляющая начальные карточки в разметку
-//    initialCards.forEach((item) => {
-//      const card = new Card(item, ".template");
-//      const cardElement = card.generateCard();
-//      listContainerElement.append(cardElement);
-//    });
-//  }
+
 //________________________________________________________________________________________________________
 const sectionDefault = new Section({
     items: initialCards,
@@ -154,20 +148,37 @@ const sectionDefault = new Section({
   },
   listContainerElement);
 
-  sectionDefault.renderCard();// вызвали метод у экземпляра класса Section для формирования и добваления карточки
+  sectionDefault.renderCard();// вызвали метод у экземпляра класса Section для формирования и добваления default карточeк
 //_________________________________________________________________________________________________________
- function addNewObjectCard(event) {// функция добовляет в разметку карточку из input
-   event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки
 
-   const itemCard = {
-     name: popupContainerCardName.value,
-     link: popupContainerCardLink.value,
-   };
 
-   const newCarItem = generateCardElement(itemCard);
-   listContainerElement.prepend(newCarItem);
 
-   closeModal(popupCard);
+
+function addNewObjectCard(event) {// функция добовляет в разметку карточку из input
+  event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки
+
+  const itemCard = {
+    name: popupContainerCardName.value,
+    link: popupContainerCardLink.value,
+  };
+  //________________________________________________
+  const sectionNew = new Section({
+    items:itemCard,
+    renderer:()=>{
+      const card = new Card(itemCard,".template");
+      const cardElement = card.generateCard();
+      sectionNew.addItem(cardElement);
+    }
+  },
+  listContainerElement);
+
+  sectionNew.renderCard();
+  //____________________________________________________
+
+  // const newCarItem = generateCardElement(itemCard);
+  // listContainerElement.prepend(newCarItem);
+
+  closeModal(popupCard);
  }
  function generateCardElement(dataCard) {// функция возвращает готовую карточку
    const card = new Card(dataCard, ".template");
@@ -189,7 +200,7 @@ const sectionDefault = new Section({
  });
  popupContainerCard.addEventListener("submit", addNewObjectCard); //добалвение карточек из формы
 
- //generateDefaultCard(initialCards); //добааление карточек из массива
+
  cardValidator.enableValidation();
  edditValidator.enableValidation();
 
