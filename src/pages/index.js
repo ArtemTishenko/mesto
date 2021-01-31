@@ -1,6 +1,7 @@
 import { Card } from "../scripts/card.js";
 //import {validationConfig} from "./validate.js";
 import {FormValidator} from "../scripts/formValidator.js"
+import { Section } from "../scripts/section.js";
 export const validationConfig = {
   formSelector: ".popup__container_type_form",
   formSelectorForm:".popup_type_card popup__container_type_eddit-form",//! проверить .popup__container_type_form заменить на popup__container_type_eddit-form
@@ -133,13 +134,28 @@ const initialCards = [
      closeModal(popupActive);
    }
  }
- function generateDefaultCard(initialCards) {
-   initialCards.forEach((item) => {
-     const card = new Card(item, ".template");
-     const cardElement = card.generateCard();
-     listContainerElement.append(cardElement);
-   });
- }
+//  function generateDefaultCard(initialCards) {// функция добавляющая начальные карточки в разметку
+//    initialCards.forEach((item) => {
+//      const card = new Card(item, ".template");
+//      const cardElement = card.generateCard();
+//      listContainerElement.append(cardElement);
+//    });
+//  }
+//________________________________________________________________________________________________________
+const sectionDefault = new Section({
+    items: initialCards,
+    renderer:()=>{
+      initialCards.forEach((initialCard)=>{// перебор по начальным карточкам
+      const card = new Card (initialCard, ".template"); // создали экземпляр для каждой карточки
+      const cardElement = card.generateCard();//сгенерировали зполненный шаблон карточки
+      sectionDefault.addItem(cardElement); // добавили в разметку
+      })
+    }
+  },
+  listContainerElement);
+
+  sectionDefault.renderCard();// вызвали метод у экземпляра класса Section для формирования и добваления карточки
+//_________________________________________________________________________________________________________
  function addNewObjectCard(event) {// функция добовляет в разметку карточку из input
    event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки
 
@@ -173,7 +189,7 @@ const initialCards = [
  });
  popupContainerCard.addEventListener("submit", addNewObjectCard); //добалвение карточек из формы
 
- generateDefaultCard(initialCards); //добааление карточек из массива
+ //generateDefaultCard(initialCards); //добааление карточек из массива
  cardValidator.enableValidation();
  edditValidator.enableValidation();
 
