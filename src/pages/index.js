@@ -1,7 +1,8 @@
 import { Card } from "../scripts/card.js";
-//import {validationConfig} from "./validate.js";
+
 import {FormValidator} from "../scripts/formValidator.js"
 import { Section } from "../scripts/section.js";
+import {Popup} from "../scripts/popup.js"
 export const validationConfig = {
   formSelector: ".popup__container_type_form",
   formSelectorForm:".popup_type_card popup__container_type_eddit-form",//! проверить .popup__container_type_form заменить на popup__container_type_eddit-form
@@ -68,12 +69,12 @@ const initialCards = [
   },
 ];
 
- function openModal(dompopup) {// в качестве аргумента передается у кого есть visible (popupImg или popupEdditForm)
-   dompopup.classList.add("popup_visible");
+//  function openModal(dompopup) {// в качестве аргумента передается у кого есть visible (popupImg или popupEdditForm)
+//    dompopup.classList.add("popup_visible");
 
-   document.addEventListener("click", closeByOverlay);
-   document.addEventListener("keydown", closePopupByEscape);
- }
+//    document.addEventListener("click", closeByOverlay);
+//    document.addEventListener("keydown", closePopupByEscape);
+//  }
  function closeModal(dompopup) {
    dompopup.classList.remove("popup_visible"); // удаляя класс закрывается попап
 
@@ -84,7 +85,10 @@ const initialCards = [
    nameInput.value = profileInfoNameNode.textContent; //подтяжка с profile-info в форму
    jobInput.value = profileInfoJobNode.textContent;
 
-   openModal(popupEditForm);
+   const edditPopup = new Popup (popupEditForm)
+   edditPopup.open();
+
+   //openModal(popupEditForm);
    edditValidator.clearError();
    edditValidator.setButtonState();
  }
@@ -151,9 +155,6 @@ const sectionDefault = new Section({
   sectionDefault.renderCard();// вызвали метод у экземпляра класса Section для формирования и добваления default карточeк
 //_________________________________________________________________________________________________________
 
-
-
-
 function addNewObjectCard(event) {// функция добовляет в разметку карточку из input
   event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки
 
@@ -180,11 +181,11 @@ function addNewObjectCard(event) {// функция добовляет в раз
 
   closeModal(popupCard);
  }
- function generateCardElement(dataCard) {// функция возвращает готовую карточку
-   const card = new Card(dataCard, ".template");
-   const cardElement = card.generateCard();
-   return cardElement;
- }
+//  function generateCardElement(dataCard) {// функция возвращает готовую карточку
+//    const card = new Card(dataCard, ".template");
+//    const cardElement = card.generateCard();
+//    return cardElement;
+//  }
 
  popupContainerEdditForm.addEventListener("submit", formSubmitHandler);
  profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
