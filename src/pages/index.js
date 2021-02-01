@@ -72,21 +72,23 @@ const initialCards = [
 //  function openModal(dompopup) {// в качестве аргумента передается у кого есть visible (popupImg или popupEdditForm)
 //    dompopup.classList.add("popup_visible");
 
-//    document.addEventListener("click", closeByOverlay);
-//    document.addEventListener("keydown", closePopupByEscape);
+//!---удалить    document.addEventListener("click", closeByOverlay);
+//!---удалить  document.addEventListener("keydown", closePopupByEscape);
 //  }
- function closeModal(dompopup) {
-   dompopup.classList.remove("popup_visible"); // удаляя класс закрывается попап
+//  function closeModal(dompopup) {
+//    dompopup.classList.remove("popup_visible"); // удаляя класс закрывается попап
 
-   document.removeEventListener("keydown", closePopupByEscape); // удаление слушателя по кнопке
-   document.removeEventListener("click", closeByOverlay); //удалени яслушателя закрытия по overlay
- }
+//!    document.removeEventListener("keydown", closePopupByEscape); // удаление слушателя по кнопке
+//!    document.removeEventListener("click", closeByOverlay); //удалени яслушателя закрытия по overlay
+//  }
+ const edditPopup = new Popup (popupEditForm)
+ const cardPopup = new Popup(popupCard);
  function openPopupEdditForm() {
    nameInput.value = profileInfoNameNode.textContent; //подтяжка с profile-info в форму
    jobInput.value = profileInfoJobNode.textContent;
 
-   const edditPopup = new Popup (popupEditForm)
    edditPopup.open();
+  // edditPopup.setEventListeners();
 
    //openModal(popupEditForm);
    edditValidator.clearError();
@@ -96,7 +98,10 @@ const initialCards = [
    popupContainerCardName.value = "";
    popupContainerCardLink.value = "";
 
-   openModal(popupCard);
+   cardPopup.open();
+   cardPopup.setEventListeners();
+
+   //openModal(popupCard);
    cardValidator.setButtonState();
    cardValidator.clearError();
  }
@@ -126,18 +131,20 @@ const initialCards = [
 
    return overlay.classList.contains("popup_visible");
  }
+
  function closeByOverlay(evt) {// функция закрытия popup при клике по overlay
 
    if (checkClassOverlay(evt.target)) {
+     console.log(evt.target)
      closeModal(evt.target);
    }
  }
- function closePopupByEscape(evt) {// функция закрития popup при нажатие  Escape
-   const popupActive = document.querySelector(".popup_visible");
-   if (evt.key === "Escape") {
-     closeModal(popupActive);
-   }
- }
+      //  function closePopupByEscape(evt) {// функция закрития popup при нажатие  Escape
+      //    const popupActive = document.querySelector(".popup_visible");
+      //    if (evt.key === "Escape") {
+      //      closeModal(popupActive);
+      //    }
+      //  }
 
 //________________________________________________________________________________________________________
 const sectionDefault = new Section({
@@ -181,21 +188,26 @@ function addNewObjectCard(event) {// функция добовляет в раз
 
   closeModal(popupCard);
  }
-//  function generateCardElement(dataCard) {// функция возвращает готовую карточку
-//    const card = new Card(dataCard, ".template");
-//    const cardElement = card.generateCard();
-//    return cardElement;
-//  }
+    //  function generateCardElement(dataCard) {// функция возвращает готовую карточку
+    //    const card = new Card(dataCard, ".template");
+    //    const cardElement = card.generateCard();
+    //    return cardElement;
+    //  }
 
  popupContainerEdditForm.addEventListener("submit", formSubmitHandler);
  profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
  profileButtonAdd.addEventListener("click", openPopupCard);
- popupButtonClose.addEventListener("click", function (evt) {
-   closeModal(popupEditForm);
- });
- popupButtonCloseCard.addEventListener("click", function (evt) {
-   closeModal(popupCard);
- });
+
+
+    //  popupButtonClose.addEventListener("click", function (evt) {
+    //    closeModal(popupEditForm);
+    //  });
+    //  popupButtonCloseCard.addEventListener("click", function (evt) {
+    //    closeModal(popupCard);
+    //  });
+
+
+
  popupButtonCloseImg.addEventListener("click", function (evt) {
    closeModal(popupImg);
  });
