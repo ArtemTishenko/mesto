@@ -12,20 +12,20 @@ export class Popup{
   }
   close(){
     this._popupSelector.classList.remove("popup_visible")
-    console.log("селектор popup_visible удален")
-    console.log(this._popupSelector.classList.contains("popup_visible"), "close visible")
-
+    this._removeListener();
   }
 
   _handleEscClose(){
-    document.addEventListener("keydown",(evt)=>{
-        if (evt.key === "Escape"){
-          this.close()
-        }
-      }
-    )
+    document.addEventListener("keydown", this._closePopupByEscape) 
   }
-  _
+  _removeListener(){
+    document.removeEventListener("keydown", this._closePopupByEscape)
+  }
+  _closePopupByEscape =(evt)=>{
+    if (evt.key === "Escape"){
+      this.close()
+    }
+  }
   _closeByOverlay(){// слушатель клика закрытия по overlay
 
   }
