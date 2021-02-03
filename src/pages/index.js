@@ -17,7 +17,7 @@ const profileButtonInfoEddit = document.querySelector(".profile__button-info-edd
 const profileButtonAdd = document.querySelector(".profile__button-add");
 const popupEditForm = document.querySelector(".popup_type_edit-form");
 const popupImg = document.querySelector(".popup_type_img");
-const popupButtonCloseImg = document.querySelector("#popup__button-close_img"); // при обращении через id не нужно формировать файловую структуру по БЭМ
+//const popupButtonCloseImg = document.querySelector("#popup__button-close_img"); // при обращении через id не нужно формировать файловую структуру по БЭМ
 const popupCard = document.querySelector(".popup_type_card");
 //const popupButtonClose = document.querySelector(".popup__button-close_type_eddit-form");
 //const popupButtonCloseCard = document.querySelector(".popup__button-close_type_card");
@@ -30,8 +30,8 @@ const popupContainerCardLink = popupContainerCard.querySelector(".popup__field_t
 const profileInfoNameNode = document.querySelector(".profile__info-name");
 const profileInfoJobNode = document.querySelector(".profile__info-job");
 const listContainerElement = document.querySelector(".elements");
-const popupPicture = popupImg.querySelector(".popup__picture"); // перенесено в класс Card метод _OpenPopupImg
-const popupPictureCaption = popupImg.querySelector(".popup__picture-caption"); // перенесено в класс Card метод _OpenPopupImg
+//const popupPicture = popupImg.querySelector(".popup__picture"); // перенесено в класс Card метод _OpenPopupImg
+//const popupPictureCaption = popupImg.querySelector(".popup__picture-caption"); // перенесено в класс Card метод _OpenPopupImg
 const cardValidator = new FormValidator(validationConfig, popupCard);
 const edditValidator = new FormValidator(validationConfig, popupEditForm);
 
@@ -91,21 +91,13 @@ const initialCards = [
    cardValidator.setButtonState();
    cardValidator.clearError();
  }
- export function openPopupImg(event) {
-   //в качестве аргумента передается у кого есть visible (popupImg или popupEdditForm)
-
-
+ export function openPopupImg(event) {//в качестве аргумента передается у кого есть visible (popupImg или popupEdditForm)
    const eventTargetSrc = event.target.getAttribute("src");
    const eventTargetAlt = event.target.getAttribute("alt");
-  // const eventTargetCaption = event.target.parentElement.querySelector(".element__caption").innerHTML;
-   // console.log(eventTargetCaption, "eventTargetCaption")
-  //  popupPicture.setAttribute("src", eventTargetSrc);
-  //  popupPicture.setAttribute("alt", eventTargetAlt);
-  //  popupPictureCaption.textContent = eventTargetCaption;
 
    popupWithImage.open(eventTargetSrc, eventTargetAlt);
-   //openModal(popupImg);
  }
+
  function formSubmitHandler(event) {
    event.preventDefault();
    profileInfoNameNode.textContent = nameInput.value; // Вставляем новые значения с помощью textContent
@@ -138,7 +130,7 @@ function addNewObjectCard(event) {// функция добовляет в раз
     name: popupContainerCardName.value,
     link: popupContainerCardLink.value,
   };
-  //________________________________________________
+
   const sectionNewCard = new Section({
     items:itemCard,
     renderer:()=>{
@@ -150,13 +142,11 @@ function addNewObjectCard(event) {// функция добовляет в раз
   listContainerElement);
 
   sectionNewCard.renderCard();
-  //____________________________________________________
-
-
 
   cardPopup.close();
  }
-
+const popupWithForm = new PopupWithForm(popupCard,addNewObjectCard)
+popupWithForm.setEventListeners
 
  popupContainerEdditForm.addEventListener("submit", formSubmitHandler);
  profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
@@ -164,9 +154,9 @@ function addNewObjectCard(event) {// функция добовляет в раз
 
 
 
- popupButtonCloseImg.addEventListener("click", function (evt) {
-   //closeModal(popupImg);
- });
+//  popupButtonCloseImg.addEventListener("click", function (evt) {
+//    //closeModal(popupImg);
+//  });
  popupContainerCard.addEventListener("submit", addNewObjectCard); //добалвение карточек из формы
 
 
