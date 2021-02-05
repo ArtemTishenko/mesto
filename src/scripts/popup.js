@@ -1,3 +1,4 @@
+
 export class Popup {
   constructor(popupSelector) {
     // селектор актинвого попапа
@@ -48,27 +49,4 @@ export class Popup {
   }
 }
 
-class PopupWithForm extends Popup{
-  constructor(popupSelector, formSubmit){
-    super(popupSelector),
-    this._formSubmit = formSubmit
-  }
-  _getInputValues(){
-    const valuesCard
-  }
-  setEventListeners(){
-    super.setEventListeners();
-    const popupContainerCard = this._popupSelector.querySelector(".popup__container_type_card")
-    console.log(popupContainerCard, "popupContainerCard");
 
-    popupContainerCard.addEventListener("submit", this._formSubmit)
-  }
-  close(){
-    super.open()
-    const popupContainerCardName =  this._popupSelector.querySelector(".popup__field_type_card-name");
-    const popupContainerCardLink = this._popupSelector.querySelector(".popup__field_type_card-link");
-    popupContainerCardName.value = "";
-    popupContainerCardLink.value = "";
-  }
-
-}
