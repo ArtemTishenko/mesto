@@ -91,19 +91,20 @@ function openPopupEdditForm() {
 }
 
 function openPopupCard() {
-   cardPopup.open();
-   popupWithFormCard.setEventListeners();
+  cardPopup.open();
+  popupWithFormCard.setEventListeners(); // установка слушателя на Submit
 
-   cardValidator.setButtonState();
-   cardValidator.clearError();
+  cardValidator.setButtonState();
+  cardValidator.clearError();
 }
 
-export function openPopupImg(event) {//в качестве аргумента передается у кого есть visible (popupImg или popupEdditForm)
+function openPopupImg(event) {//в качестве аргумента передается у кого есть visible (popupImg или popupEdditForm)
   const eventTargetSrc = event.target.getAttribute("src");
   const eventTargetAlt = event.target.getAttribute("alt");
 
   popupWithImage.open(eventTargetSrc, eventTargetAlt);
 }
+
 function formSubmitHandler(data) {
   userInfo.setUserInfo(data)// вставляем новые значения методом setUserInfo класса UserInfo, data - данные полученные из класса PopupWithForm
   edditPopup.close();
@@ -113,7 +114,7 @@ const sectionDefault = new Section({ //создаем экземпляр кла�
     items: initialCards,
     renderer:()=>{
       initialCards.forEach((initialCard)=>{// перебор по массивву данных с начальными карточкамами
-      const card = new Card (initialCard, ".template"); // создали экземпляр для каждой карточки
+      const card = new Card (initialCard, ".template", openPopupImg); // создали экземпляр для каждой карточки
       const cardElement = card.generateCard();//сгенерировали зполненный шаблон карточки
       sectionDefault.addItem(cardElement); // добавили в разметку
       })
@@ -125,7 +126,7 @@ function addNewObjectCard(dataCard) {// функция добовляет в р�
   const sectionNewCard = new Section({
     items:dataCard,
     renderer:()=>{
-      const card = new Card(dataCard,".template");
+      const card = new Card(dataCard,".template", openPopupImg);
       const cardElement = card.generateCard();
       sectionNewCard.addNewItem(cardElement);
     }
@@ -135,11 +136,8 @@ function addNewObjectCard(dataCard) {// функция добовляет в р�
   popupWithFormCard.close();
 }
 
-
 profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
 profileButtonAdd.addEventListener("click", openPopupCard);
-
-
 
 cardValidator.enableValidation();
 edditValidator.enableValidation();

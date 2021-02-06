@@ -1,10 +1,11 @@
-import {openPopupImg} from '../../src/pages/index.js';
+//import {openPopupImg} from '../../src/pages/index.js';
 export class Card {
-  constructor(item, cardSelector) {
+  constructor(item, cardSelector, handleCardClick) {
     this._item = item;
     this._name = item.name;
     this._link = item.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
   _getTemplate() {// возвращает шаблон разметки карточки
     const cardElement = document
@@ -30,7 +31,7 @@ export class Card {
     elementLike.addEventListener("click", () => {
       this._clickLikeButton();
     });
-    elementImg.addEventListener("click", openPopupImg);
+    elementImg.addEventListener("click", this._handleCardClick);
 
   }
   generateCard() {
