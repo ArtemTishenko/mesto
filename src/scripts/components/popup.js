@@ -1,7 +1,6 @@
 
 export class Popup {
-  constructor(popupSelector) {
-    // селектор актинвого попапа
+  constructor(popupSelector) {// селектор актинвого попапа
     this._popupSelector = popupSelector;
   }
 

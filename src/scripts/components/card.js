@@ -15,7 +15,9 @@ export class Card {
     return cardElement;
   }
   _clickLikeButton() {
-    this._element.querySelector(".element__like").classList.toggle("element__like_active");
+    this._element
+      .querySelector(".element__like")
+      .classList.toggle("element__like_active");
   }
   _clickRemoveButton() {
     this._element.remove();
@@ -32,18 +34,20 @@ export class Card {
       this._clickLikeButton();
     });
     elementImg.addEventListener("click", this._handleCardClick);
-
   }
   generateCard() {
-    this._element = this._getTemplate();// клонирование шаблона карточки
+    this._element = this._getTemplate(); // клонирование шаблона карточки
     this._element.querySelector(".element__caption").textContent = this._name;
-    this._element.querySelector(".element__img").setAttribute("src", `${this._link}`);
-    this._element.querySelector(".element__img").setAttribute("alt", `${this._name}`);
+    this._element
+      .querySelector(".element__img")
+      .setAttribute("src", `${this._link}`);
+    this._element
+      .querySelector(".element__img")
+      .setAttribute("alt", `${this._name}`);
 
     this._setEventListeners();
 
-
     return this._element;
   }
-  render
+  render;
 }
