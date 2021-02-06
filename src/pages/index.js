@@ -5,7 +5,7 @@ import { Section } from "../scripts/section.js";
 import {Popup} from "../scripts/popup.js";
 import {PopupWithImage} from "../scripts/popupWithImage.js";
 import {PopupWithForm} from "../scripts/popupWithForm.js"
-
+import {UserInfo} from "../scripts/userInfo.js"
 export const validationConfig = {
   formSelector: ".popup__container_type_form",
   formSelectorForm:".popup_type_card popup__container_type_eddit-form",//! проверить .popup__container_type_form заменить на popup__container_type_eddit-form
@@ -26,8 +26,8 @@ const popupContainerEdditForm = document.querySelector(".popup__container_type_e
 const nameInput = popupContainerEdditForm.querySelector(".popup__field_type_name");
 const jobInput = popupContainerEdditForm.querySelector(".popup__field_type_job");
 const popupContainerCard = document.querySelector(".popup__container_type_card");
-const popupContainerCardName = popupContainerCard.querySelector(".popup__field_type_card-name");
-const popupContainerCardLink = popupContainerCard.querySelector(".popup__field_type_card-link");
+//const popupContainerCardName = popupContainerCard.querySelector(".popup__field_type_card-name");
+//const popupContainerCardLink = popupContainerCard.querySelector(".popup__field_type_card-link");
 const profileInfoNameNode = document.querySelector(".profile__info-name");
 const profileInfoJobNode = document.querySelector(".profile__info-job");
 const listContainerElement = document.querySelector(".elements");
@@ -69,22 +69,25 @@ const initialCards = [
   },
 ];
 
-const edditPopup = new Popup (popupEditForm)
+const edditPopup = new Popup (popupEditForm);
 const cardPopup = new Popup(popupCard);
 const popupWithImage = new PopupWithImage(popupImg);
-const popupWithFormCard = new PopupWithForm(popupCard, addNewObjectCard)
-const popupWithFormEddit = new PopupWithForm(popupEditForm, formSubmitHandler)
-
+const popupWithFormCard = new PopupWithForm(popupCard, addNewObjectCard);
+const popupWithFormEddit = new PopupWithForm(popupEditForm, formSubmitHandler);
+const userInfo = new UserInfo ({
+  profileInfoName: profileInfoNameNode,
+  profileInfoJob:profileInfoJobNode
+});
 
 function openPopupEdditForm() {
-   nameInput.value = profileInfoNameNode.textContent; //подтяжка с profile-info в форму
-   jobInput.value = profileInfoJobNode.textContent;
+  nameInput.value = userInfo.getUserInfo().name; //подтяжка с profile-info в форму
+  jobInput.value = userInfo.getUserInfo().job;
 
-   edditPopup.open();
-   popupWithFormEddit.setEventListeners();
+  edditPopup.open();
+  popupWithFormEddit.setEventListeners();
 
-   edditValidator.clearError();
-   edditValidator.setButtonState();
+  edditValidator.clearError();
+  edditValidator.setButtonState();
 }
 
 function openPopupCard() {
@@ -102,16 +105,8 @@ export function openPopupImg(event) {//в качестве аргумента п
   popupWithImage.open(eventTargetSrc, eventTargetAlt);
 }
 function formSubmitHandler(data) {
-  //event.preventDefault();
-  console.log(data, "data from eddit form");
-
-  profileInfoNameNode.textContent = data.name; // Вставляем новые значения с помощью textContent
-  profileInfoJobNode.textContent = data.job;
-  // profileInfoNameNode.textContent = nameInput.value; // Вставляем новые значения с помощью textContent
-  // profileInfoJobNode.textContent = jobInput.value;
-
+  userInfo.setUserInfo(data)// вставляем новые значения методом setUserInfo класса UserInfo, data - данные полученные из класса PopupWithForm
   edditPopup.close();
-  //closeModal(popupEditForm);
 }
 
 const sectionDefault = new Section({ //создаем экземпляр класса для начальных карточек
@@ -141,14 +136,6 @@ function addNewObjectCard(dataCard) {// функция добовляет в р�
 }
 
 
-
-
-
-
-
-
-
-//popupContainerEdditForm.addEventListener("submit", formSubmitHandler);
 profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
 profileButtonAdd.addEventListener("click", openPopupCard);
 
