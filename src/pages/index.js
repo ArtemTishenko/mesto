@@ -72,6 +72,8 @@ const initialCards = [
 const edditPopup = new Popup (popupEditForm)
 const cardPopup = new Popup(popupCard);
 const popupWithImage = new PopupWithImage(popupImg);
+const popupWithFormCard = new PopupWithForm(popupCard, addNewObjectCard)
+const popupWithFormEddit = new PopupWithForm(popupEditForm, formSubmitHandler)
 
 
 function openPopupEdditForm() {
@@ -79,16 +81,15 @@ function openPopupEdditForm() {
    jobInput.value = profileInfoJobNode.textContent;
 
    edditPopup.open();
+   popupWithFormEddit.setEventListeners();
 
    edditValidator.clearError();
    edditValidator.setButtonState();
 }
 
 function openPopupCard() {
-   popupContainerCardName.value = "";
-   popupContainerCardLink.value = "";
-
    cardPopup.open();
+   popupWithFormCard.setEventListeners();
 
    cardValidator.setButtonState();
    cardValidator.clearError();
@@ -100,16 +101,18 @@ export function openPopupImg(event) {//в качестве аргумента п
 
   popupWithImage.open(eventTargetSrc, eventTargetAlt);
 }
+function formSubmitHandler(data) {
+  //event.preventDefault();
+  console.log(data, "data from eddit form");
 
-function formSubmitHandler(event) {
-  event.preventDefault();
-  profileInfoNameNode.textContent = nameInput.value; // Вставляем новые значения с помощью textContent
-  profileInfoJobNode.textContent = jobInput.value;
+  profileInfoNameNode.textContent = data.name; // Вставляем новые значения с помощью textContent
+  profileInfoJobNode.textContent = data.job;
+  // profileInfoNameNode.textContent = nameInput.value; // Вставляем новые значения с помощью textContent
+  // profileInfoJobNode.textContent = jobInput.value;
 
   edditPopup.close();
   //closeModal(popupEditForm);
 }
-
 
 const sectionDefault = new Section({ //создаем экземпляр класса для начальных карточек
     items: initialCards,
@@ -121,48 +124,34 @@ const sectionDefault = new Section({ //создаем экземпляр кла�
       })
     }
 },listContainerElement);
-
 sectionDefault.renderCard();// вызвали метод у экземпляра класса Section для формирования и добваления default карточeк
 
-function addNewObjectCard(event) {// функция добовляет в разметку карточку из input
- // event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки
-
-  const itemCard = {
-    name: popupContainerCardName.value,
-    link: popupContainerCardLink.value,
-  };
-
-  const sectionNewCard = new({
-    items:itemCard,
+function addNewObjectCard(dataCard) {// функция добовляет в разметку карточку из input
+  const sectionNewCard = new Section({
+    items:dataCard,
     renderer:()=>{
-      const card = new Card(itemCard,".template");
+      const card = new Card(dataCard,".template");
       const cardElement = card.generateCard();
-      sectionNewCard.addItem(cardElement);
+      sectionNewCard.addNewItem(cardElement);
     }
   },listContainerElement);
 
   sectionNewCard.renderCard();
-
-  cardPopup.close();
+  popupWithFormCard.close();
 }
 
-const popupWithFormCard = new PopupWithForm(popupCard, addNewObjectCard)
-popupWithFormCard.setEventListeners();
-
-const popupWithFormEddit = new PopupWithForm(popupEditForm, addNewObjectCard)
-popupWithFormEddit.setEventListeners();
 
 
-popupContainerEdditForm.addEventListener("submit", formSubmitHandler);
+
+
+
+
+
+
+//popupContainerEdditForm.addEventListener("submit", formSubmitHandler);
 profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
 profileButtonAdd.addEventListener("click", openPopupCard);
 
-
-
-//  popupButtonCloseImg.addEventListener("click", function (evt) {
-//    //closeModal(popupImg);
-//  });
-//popupContainerCard.addEventListener("submit", addNewObjectCard); //добалвение карточек из формы
 
 
 cardValidator.enableValidation();
