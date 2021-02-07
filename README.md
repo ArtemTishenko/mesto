@@ -18,6 +18,7 @@
 * Javascript
 * Адаптивная верстка
 * ООП
+* webpack
 
 ### GitHub Pages
 
