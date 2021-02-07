@@ -1,0 +1,40 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "* Сайт позволяет открыть popup окно и изменить поля ввода \"Имя\" и \"О себе\" с последующим\r сохранением на главной сттранице.\r * Добавление карточек с местами\r * Удаление карточек\r * Можно поставить лайк\r * У элементов присутствуют  псевдоклассы :hover и :active\r * Валидация форм\r * Закрытие форм на Escape\r * Закрытие кликом по overlay",
+  "main": "/pages/index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArtemTishenko/mesto.git"
+  },
+  "author": "Artem Tishenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArtemTishenko/mesto/issues"
+  },
+  "homepage": "https://github.com/ArtemTishenko/mesto#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "@babel/plugin-proposal-class-properties": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
+    "autoprefixer": "^10.2.4",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^5.0.1",
+    "cssnano": "^4.1.10",
+    "html-webpack-plugin": "^5.0.0",
+    "mini-css-extract-plugin": "^1.3.5",
+    "postcss-loader": "^5.0.0",
+    "webpack": "^5.21.1",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3"
+  }
+}

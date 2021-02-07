@@ -1,11 +1,13 @@
+import '../pages/index.css';
 import { Card } from "../scripts/components/card.js";
 
 import {FormValidator} from "../scripts/components/formValidator.js";
 import { Section } from "../scripts/components/section.js";
 import {Popup} from "../scripts/components/popup.js";
 import {PopupWithImage} from "../scripts/components/popupWithImage.js";
-import {PopupWithForm} from "../scripts/components/popupWithForm.js"
-import {UserInfo} from "../scripts/components/userInfo.js"
+import {PopupWithForm} from "../scripts/components/popupWithForm.js";
+import {UserInfo} from "../scripts/components/userInfo.js";
+
 
 import {
   profileButtonInfoEddit,
