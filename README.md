@@ -17,6 +17,7 @@
 * CSS
 * Javascript
 * Адаптивная верстка
+* ООП
 * WebPack
 
 ### GitHub Pages
