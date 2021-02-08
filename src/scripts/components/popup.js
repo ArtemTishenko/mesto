@@ -5,7 +5,6 @@ export class Popup {
   }
 
   open() {
-    console.log(this._popupElement, "this._popupElement")
     this._popupElement.classList.add("popup_visible");
     this.setEventListeners();
     this._handleEscClose();
