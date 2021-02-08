@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Артем Тищенко">
-  <link rel="stylesheet" href="./pages/index.css">
+
   <title>Mesto</title>
 </head>
 <body class="root">
@@ -57,7 +57,7 @@
         <fieldset class="popup__form popup__form_type_card">
           <input class="popup__field popup__field_type_card-name" id="popup__field-card-name" type="text" placeholder="Название" aria-label="Название" name="name" required minlength="2" maxlength="30" novalidate autocomplete="off">
           <span class="popup__field-error" id="popup__field-card-name-error"></span>
-          <input class="popup__field popup__field_type_card-link" id="popup__field-card-link" type="url" placeholder="Ссылка на картинку" aria-label="Ссылка на картинку" name="link" required novalidate autocomplete="on">
+          <input class="popup__field popup__field_type_card-link" id="popup__field-card-link" type="url" placeholder="Ссылка на картинку" aria-label="Ссылка на картинку" name="link" required novalidate autocomplete="off">
           <span class="popup__field-error" id="popup__field-card-link-error"></span>
         </fieldset>
         <button type="submit" class="popup__button-submit popup__button-submit_type_card  button">Cоздать</button>
@@ -83,8 +83,6 @@
       </div>
     </div>
   </template>
-  <script type="module" src="./pages/index.js"></script>
-
 
 </body>
 </html>
