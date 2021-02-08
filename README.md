@@ -20,6 +20,8 @@
 * ООП
 * webpack
 
+
+
 ### GitHub Pages
 
 * [Ссылка на GitHub Pages](https://artemtishenko.github.io/mesto/)
