@@ -42,7 +42,7 @@ function openPopupEdditForm() {
   jobInput.value = userInfo.getUserInfo().job;
 
   edditPopup.open();
-  popupWithFormEddit.setEventListeners();
+
 
   edditValidator.clearError();
   edditValidator.setButtonState();
@@ -50,7 +50,7 @@ function openPopupEdditForm() {
 
 function openPopupCard() {
   cardPopup.open();
-  popupWithFormCard.setEventListeners(); // установка слушателя на Submit
+
 
   cardValidator.setButtonState();
   cardValidator.clearError();
@@ -101,6 +101,9 @@ function addNewObjectCard(dataCard) {// функция добовляет в р�
   sectionNewCard.renderCard();
   popupWithFormCard.close();
 }
+
+popupWithFormCard.setEventListeners(); // установка слушателя на Submit
+popupWithFormEddit.setEventListeners();
 
 profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
 profileButtonAdd.addEventListener("click", openPopupCard);
