@@ -1,9 +1,9 @@
-import {validationConfig} from '../utils/constants.js'
+//import {validationConfig} from '../utils/constants.js'
 
 export class FormValidator {
   constructor(validationConfig, validationForm) {
     this._validationForm = validationForm; //= .popup_type_card
-
+    this._validationConig = validationConfig;
     this._formSelector = validationConfig.formSelector;
     this._inputSelector = validationConfig.inputSelector;
     this._submitButtonSelector = validationConfig.submitButtonSelector;
@@ -36,7 +36,7 @@ export class FormValidator {
     this._inputList.forEach((input) => {
       input.addEventListener("input", () => {
         this._checkInputValidity(input);
-        this.setButtonState(validationConfig);
+        this.setButtonState( this._validationConig);
       });
     });
   }
