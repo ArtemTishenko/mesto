@@ -33,8 +33,8 @@ const popupWithImage = new PopupWithImage(popupImg);
 const popupWithFormCard = new PopupWithForm(popupCard, addNewObjectCard);
 const popupWithFormEddit = new PopupWithForm(popupEditForm, formSubmitHandler);
 const userInfo = new UserInfo({
-  profileInfoName: profileInfoNameNode,
-  profileInfoJob: profileInfoJobNode,
+  profileNameSelector: ".profile__info-name",
+  profileJobSelector: ".profile__info-job",
 });
 
 function openPopupEdditForm() {
