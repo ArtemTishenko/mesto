@@ -1,17 +1,18 @@
 
 export class Popup {
-  constructor(popupSelector) {// селектор актинвого попапа
-    this._popupSelector = popupSelector;
+  constructor(popupElement) {// селектор актинвого попапа
+    this._popupElement = popupElement;
   }
 
   open() {
-    this._popupSelector.classList.add("popup_visible");
+    console.log(this._popupElement, "this._popupElement")
+    this._popupElement.classList.add("popup_visible");
     this.setEventListeners();
     this._handleEscClose();
     this._handleOverlayClose();
   }
   close() {
-    this._popupSelector.classList.remove("popup_visible");
+    this._popupElement.classList.remove("popup_visible");
     this._removeListeners();
   }
 
@@ -39,7 +40,7 @@ export class Popup {
   };
 
   setEventListeners() {// слушатель клика по иконке закрытия попапа
-    const buttonClose = this._popupSelector.querySelector(
+    const buttonClose = this._popupElement.querySelector(
       ".popup__button-close"
     );
     buttonClose.addEventListener("click", () => {
