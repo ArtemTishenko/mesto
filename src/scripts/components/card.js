@@ -33,7 +33,7 @@ export class Card {
     elementLike.addEventListener("click", () => {
       this._clickLikeButton();
     });
-    elementImg.addEventListener("click", this._handleCardClick);
+    elementImg.addEventListener("click", () => this._handleCardClick(this._link, this._name));
   }
   generateCard() {
     this._element = this._getTemplate(); // клонирование шаблона карточки

@@ -56,12 +56,8 @@ function openPopupCard() {
   cardValidator.clearError();
 }
 
-function openPopupImg(event) {
-  //в качестве аргумента передается у кого есть visible (popupImg или popupEdditForm)
-  const eventTargetSrc = event.target.getAttribute("src");
-  const eventTargetAlt = event.target.getAttribute("alt");
-
-  popupWithImage.open(eventTargetSrc, eventTargetAlt);
+function openPopupImg(link, name) {
+  popupWithImage.open(link, name);
 }
 
 function formSubmitHandler(data) {
