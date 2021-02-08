@@ -44,6 +44,7 @@ function openPopupEdditForm() {
   edditPopup.open();
 
 
+
   edditValidator.clearError();
   edditValidator.setButtonState();
 }
@@ -57,6 +58,7 @@ function openPopupCard() {
 }
 
 function openPopupImg(link, name) {
+
   popupWithImage.open(link, name);
 }
 
@@ -98,8 +100,10 @@ function addNewObjectCard(dataCard) {// функция добовляет в р�
   popupWithFormCard.close();
 }
 
-popupWithFormCard.setEventListeners(); // установка слушателя на Submit
+
+popupWithFormCard.setEventListeners(); // установка слушатель клика по иконке закрытия попапа
 popupWithFormEddit.setEventListeners();
+popupWithImage.setEventListeners();
 
 profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
 profileButtonAdd.addEventListener("click", openPopupCard);

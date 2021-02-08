@@ -6,7 +6,7 @@ export class Popup {
 
   open() {
     this._popupElement.classList.add("popup_visible");
-    this.setEventListeners();
+
     this._handleEscClose();
     this._handleOverlayClose();
   }
@@ -44,7 +44,7 @@ export class Popup {
     );
     buttonClose.addEventListener("click", () => {
       this.close();
-    });
+    })
   }
 }
 
