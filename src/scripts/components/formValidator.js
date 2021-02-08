@@ -61,7 +61,7 @@ export class FormValidator {
 
   clearError() {
     this._inputList.forEach((input) => { //выбираем все инпуты в активной форме
-      input.classList.remove(this._inputErrorClass); //"удаляем popup__field_type_error"
+      this._hideInputError(input);
       const errorList = this._validationForm.querySelectorAll(
         `#${input.id}-error`
       );// выбрали все spanы
