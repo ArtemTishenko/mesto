@@ -2,6 +2,7 @@ const path = require('path');
 const  {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { default: postcss } = require('postcss');
 module.exports = {
   entry:{
     main: './src/pages/index.js'
@@ -34,7 +35,8 @@ module.exports = {
         {
           loader: 'css-loader',
           options: { importLoaders: 1 }
-        }
+        },
+        'postcss-loader'
       ]
     },
     {
