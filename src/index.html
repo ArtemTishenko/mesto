@@ -4,17 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Артем Тищенко">
-
+  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 <body class="root">
   <div class="container">
      <header class="header">
-      <img class="header__logo" src="<%=require('./blocks/header/__logo/logo.svg')%>" alt="Логотип Mesto">
+      <!-- <img class="header__logo" src="<%=require('./blocks/header/__logo/logo.svg')%>" alt="Логотип Mesto"> -->
+      <img class="header__logo" src="./blocks/header/__logo/logo.svg" alt="Логотип Mesto">
       </header>
       <main class="main">
         <section class="profile">
-          <img class="profile__avatar-img" src="<%=require('./blocks/profile/__avatar-img/avatar-cuosto.jpg')%>" alt="Аватар профиля">
+          <!-- <img class="profile__avatar-img" src="<%=require('./blocks/profile/__avatar-img/avatar-cuosto.jpg')%>" alt="Аватар профиля"> -->
+          <img class="profile__avatar-img" src="./blocks/profile/__avatar-img/avatar-cuosto.jpg" alt="Аватар профиля">
           <div class="profile__info">
             <div class="profile__info-name-eddit">
               <h1 class="profile__info-name"> Жак&#8211;Ив Кусто</h1>
@@ -41,7 +43,7 @@
         <fieldset class="popup__form">
           <input class="popup__field popup__field_type_name " id="popup__field-eddit-name" type="text" placeholder="Имя" aria-label="Имя" name="name" required minlength="3" maxlength="40"  novalidate autocomplete="off" >
           <span class="popup__field-error" id="popup__field-eddit-name-error"></span>
-          <input class="popup__field popup__field_type_job" id="popup__field-eddit-job" type="text" placeholder="Профессия" aria-label="О себе" name="job" required minlength="2" maxlength="200" novalidate autocomplete="off">
+          <input class="popup__field popup__field_type_job" id="popup__field-eddit-job" type="text" placeholder="Профессия" aria-label="О себе" name="about" required minlength="2" maxlength="200" novalidate autocomplete="off">
           <span class="popup__field-error" id="popup__field-eddit-job-error"></span>
         </fieldset>
         <button type="submit" class="popup__button-submit button">Сохранить</button>
@@ -57,7 +59,7 @@
         <fieldset class="popup__form popup__form_type_card">
           <input class="popup__field popup__field_type_card-name" id="popup__field-card-name" type="text" placeholder="Название" aria-label="Название" name="name" required minlength="2" maxlength="30" novalidate autocomplete="off">
           <span class="popup__field-error" id="popup__field-card-name-error"></span>
-          <input class="popup__field popup__field_type_card-link" id="popup__field-card-link" type="url" placeholder="Ссылка на картинку" aria-label="Ссылка на картинку" name="link" required novalidate autocomplete="off">
+          <input class="popup__field popup__field_type_card-link" id="popup__field-card-link" type="url" placeholder="Ссылка на картинку" aria-label="Ссылка на картинку" name="link" required novalidate autocomplete="on">
           <span class="popup__field-error" id="popup__field-card-link-error"></span>
         </fieldset>
         <button type="submit" class="popup__button-submit popup__button-submit_type_card  button">Cоздать</button>
@@ -83,6 +85,6 @@
       </div>
     </div>
   </template>
-
+  <script type="module" src="./pages/index.js"></script>
 </body>
 </html>

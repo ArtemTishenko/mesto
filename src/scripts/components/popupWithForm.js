@@ -14,7 +14,7 @@ export class PopupWithForm extends Popup {
     this._popupInputList.forEach((input) => {
       inputData[input.name] = input.value;
     });
-
+   // console.log(inputData, "inputData")
     return inputData;
   }
   _formSubmit = (event) => {

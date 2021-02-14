@@ -35,6 +35,11 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "browserify-zlib": "^0.2.0",
     "core-js": "^3.8.3"
   }
+
+
+
+
 }

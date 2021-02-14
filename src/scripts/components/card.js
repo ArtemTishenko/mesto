@@ -1,11 +1,12 @@
 //import {openPopupImg} from '../../src/pages/index.js';
 export class Card {
-  constructor(item, cardSelector, handleCardClick) {
+  constructor(item, cardSelector, handleCardClick, api) {
     this._item = item;
     this._name = item.name;
     this._link = item.link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._api = api // приняли экземпляр класса Api
   }
   _getTemplate() {// возвращает шаблон разметки карточки
     const cardElement = document
@@ -49,5 +50,10 @@ export class Card {
 
     return this._element;
   }
+
   render;
+
+
 }
+
+

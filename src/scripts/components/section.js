@@ -2,9 +2,12 @@ export class Section {
   constructor({ items, renderer }, containerSelector) {
     this._items = items;
     (this._renderer = renderer), (this._container = containerSelector);
+
   }
 
   renderCard(item) {
+    //console.log(item, "item")
+    //this.saveCardToServer(item);
     this._renderer(item);
   }
 
@@ -13,8 +16,13 @@ export class Section {
     this._container.append(elementCard);
   }
   addNewItem(elementCard) {
+
     this._container.prepend(elementCard);
   }
+
+
+
+
 }
 
 

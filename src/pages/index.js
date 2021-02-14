@@ -1,4 +1,4 @@
-import '../pages/index.css';
+//import '../pages/index.css';
 import { Card } from "../scripts/components/card.js";
 
 import {FormValidator} from "../scripts/components/formValidator.js";
@@ -7,7 +7,7 @@ import {Popup} from "../scripts/components/popup.js";
 import {PopupWithImage} from "../scripts/components/popupWithImage.js";
 import {PopupWithForm} from "../scripts/components/popupWithForm.js";
 import {UserInfo} from "../scripts/components/userInfo.js";
-
+import {Api} from "../scripts/components/api.js"
 
 import {
   profileButtonInfoEddit,
@@ -20,9 +20,12 @@ import {
   profileInfoNameNode,
   profileInfoJobNode,
   listContainerElement,
-  initialCards,
+  //initialCards,
   validationConfig,
 } from "../scripts/utils/constants.js";
+//import { data } from "autoprefixer";
+//import { data } from 'autoprefixer';
+//import { json } from 'body-parser';
 
 const cardValidator = new FormValidator(validationConfig, popupCard);
 const edditValidator = new FormValidator(validationConfig, popupEditForm);
@@ -43,8 +46,6 @@ function openPopupEdditForm() {
 
   edditPopup.open();
 
-
-
   edditValidator.clearError();
   edditValidator.setButtonState();
 }
@@ -63,42 +64,13 @@ function openPopupImg(link, name) {
 }
 
 function formSubmitHandler(data) {
+  console.log(data, "dataUserInfo")
   userInfo.setUserInfo(data); // вставляем новые значения методом setUserInfo класса UserInfo, data - данные полученные из класса PopupWithForm
   edditPopup.close();
 }
 
-const sectionDefault = new Section(//создаем экземпляр класса для начальных карточек
-  {
-    items: initialCards,
-    renderer: () => {
-      initialCards.forEach((initialCard) => {
-        // перебор по массивву данных с начальными карточкамами
-        const card = new Card(initialCard, ".template", openPopupImg); // создали экземпляр для каждой карточки
-        const cardElement = card.generateCard(); //сгенерировали зполненный шаблон карточки
-        sectionDefault.addItem(cardElement); // добавили в разметку
-      });
-    },
-  },
-  listContainerElement
-);
-sectionDefault.renderCard(); // вызвали метод у экземпляра класса Section для формирования и добваления default карточeк
 
-function addNewObjectCard(dataCard) {// функция добовляет в разметку карточку из input
-  const sectionNewCard = new Section(
-    {
-      items: dataCard,
-      renderer: () => {
-        const card = new Card(dataCard, ".template", openPopupImg);
-        const cardElement = card.generateCard();
-        sectionNewCard.addNewItem(cardElement);
-      },
-    },
-    listContainerElement
-  );
 
-  sectionNewCard.renderCard();
-  popupWithFormCard.close();
-}
 
 
 popupWithFormCard.setEventListeners(); // установка слушатель клика по иконке закрытия попапа
@@ -110,4 +82,69 @@ profileButtonAdd.addEventListener("click", openPopupCard);
 
 cardValidator.enableValidation();
 edditValidator.enableValidation();
+//!_____________________________________________________________________
+const api = new Api({
+  url:"https://mesto.nomoreparties.co/v1/cohort-20/cards/",
+  headers:{
+    authorization: '4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
+    "content-type":'application/json'
+  }
+})
+const apiEddit = new Api({
+  url:"https://mesto.nomoreparties.co/v1/cohort-20/users/me",
+  headers:{
+    authorization:'4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
+    "content-type":'application/json'
+  }
+})
+const apiEdditAnswer = apiEddit.getAllCarads()
+.then((data)=>{
+  console.log(data, "data")
+  userInfo.setUserInfo(data);
+
+});
+console.log(apiEdditAnswer, "apiEdditAnswer")
+
+
+function addNewObjectCard(dataCard) {// функция добовляет в разметку карточку из input
+
+  const sectionNewCard = new Section(
+    {
+      items: dataCard,
+      renderer: () => {
+        api.addCard(dataCard)
+        const card = new Card(dataCard, ".template", openPopupImg, api);
+        const cardElement = card.generateCard();
+        sectionNewCard.addNewItem(cardElement);
+      },
+    },
+    listContainerElement,
+  );
+  sectionNewCard.renderCard();
+  popupWithFormCard.close();
+}
+
+api.getAllCarads()
+    .then((data)=>{
+      //console.log(data, "data_index.js");
+      const sectionDefault = new Section(//создаем экземпляр класса для начальных карточек
+        {
+          items: data,
+          renderer: () => {
+            data.forEach((initialCard) => {// перебор по массивву данных с начальными карточкамами
+              const card = new Card(initialCard, ".template", openPopupImg); // создали экземпляр для каждой карточки
+              const cardElement = card.generateCard(); //сгенерировали зполненный шаблон карточки
+              sectionDefault.addItem(cardElement); // добавили в разметку
+            });
+          },
+        },
+        listContainerElement
+      );
+      sectionDefault.renderCard(); // вызвали метод у экземпляра класса Section для формирования и добваления default карточeк
+    })
+    .catch((err)=>{ // catch всегда вызывать из index.js
+      console.log(err, "err из index.js")
+    })
+
+
 
