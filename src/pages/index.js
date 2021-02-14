@@ -24,8 +24,18 @@ import {
   validationConfig,
 } from "../scripts/utils/constants.js";
 //import { data } from "autoprefixer";
-//import { data } from 'autoprefixer';
-//import { json } from 'body-parser';
+
+
+const apiEddit = new Api({
+  url:"https://mesto.nomoreparties.co/v1/cohort-20/users/me",
+  headers:{
+    authorization:'4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
+    "content-type":'application/json'
+  }
+})
+
+
+
 
 const cardValidator = new FormValidator(validationConfig, popupCard);
 const edditValidator = new FormValidator(validationConfig, popupEditForm);
@@ -34,7 +44,7 @@ const edditPopup = new Popup(popupEditForm);
 const cardPopup = new Popup(popupCard);
 const popupWithImage = new PopupWithImage(popupImg);
 const popupWithFormCard = new PopupWithForm(popupCard, addNewObjectCard);
-const popupWithFormEddit = new PopupWithForm(popupEditForm, formSubmitHandler);
+const popupWithFormEddit = new PopupWithForm(popupEditForm, formSubmitHandler, apiEddit);
 const userInfo = new UserInfo({
   profileNameSelector: ".profile__info-name",
   profileJobSelector: ".profile__info-job",
@@ -64,7 +74,7 @@ function openPopupImg(link, name) {
 }
 
 function formSubmitHandler(data) {
-  console.log(data, "dataUserInfo")
+
   userInfo.setUserInfo(data); // вставляем новые значения методом setUserInfo класса UserInfo, data - данные полученные из класса PopupWithForm
   edditPopup.close();
 }
@@ -90,23 +100,22 @@ const api = new Api({
     "content-type":'application/json'
   }
 })
-const apiEddit = new Api({
-  url:"https://mesto.nomoreparties.co/v1/cohort-20/users/me",
-  headers:{
-    authorization:'4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
-    "content-type":'application/json'
-  }
-})
-const apiEdditAnswer = apiEddit.getAllCarads()
-.then((data)=>{
-  console.log(data, "data")
-  userInfo.setUserInfo(data);
-
-});
-console.log(apiEdditAnswer, "apiEdditAnswer")
+// const apiEddit = new Api({
+//   url:"https://mesto.nomoreparties.co/v1/cohort-20/users/me",
+//   headers:{
+//     authorization:'4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
+//     "content-type":'application/json'
+//   }
+// })
 
 
-function addNewObjectCard(dataCard) {// функция добовляет в разметку карточку из input
+// apiEddit.addInfoProfile()
+//   .then((data)=>{
+//     console.log(data, "")
+//   })
+
+
+function addNewObjectCard(dataCard) {// функция добовляет в разметку карточку с СЕРВЕРА по ыг
 
   const sectionNewCard = new Section(
     {
@@ -147,4 +156,13 @@ api.getAllCarads()
     })
 
 
+    apiEddit.getInfoProfile()// запрос на данные пользователя
+    .then((data)=>{
+      document.querySelector('.profile__avatar-img').setAttribute("src", data.avatar); // установка аватара из пришедших данных о пользователе с сервера
 
+      userInfo.setUserInfo(data);
+      console.log(data, "data из getinfoprofile")
+    })
+    .catch((err)=>{
+      console.log(err, "err из index.js -apiEdditAnswer")
+    });

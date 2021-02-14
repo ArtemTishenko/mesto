@@ -11,6 +11,7 @@ export class UserInfo {
     return profile;
   }
   setUserInfo(data) {
+
     this._profileName.textContent = data.name;
     this._profileJob.textContent = data.about;
   }
