@@ -1,0 +1,24 @@
+.profile__avatar-icon{
+  width: 26px;
+  height: 26px;
+  position:absolute;
+  top: 47px;
+  right: 74px;
+  opacity: 0;
+}
+
+.profile__avatar-icon:hover{
+  opacity: 1;
+}
+@media screen and (max-width:740px){
+  .profile__avatar-icon{
+    top: 47px;
+    right: 69px;
+  }
+}
+@media screen and (max-width:670px){
+  .profile__avatar-icon{
+    top: 47px;
+    right: 47px;
+  }
+}

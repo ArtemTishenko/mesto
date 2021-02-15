@@ -66,3 +66,5 @@
 @import url(../../src/blocks/popup/__button-submit/_type/popup__button-submit_type_invalid.css);
 
 @import url(../../src/blocks/popup/__container/_type/popup__container_type_form.css);
+@import url(../../src/blocks/profile/__avatar-icon/profile__avatar-icon.css);
+@import url(../../src/blocks/profile/__element/profile_elment.css);

@@ -38,8 +38,4 @@
     "browserify-zlib": "^0.2.0",
     "core-js": "^3.8.3"
   }
-
-
-
-
 }

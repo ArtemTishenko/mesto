@@ -1,0 +1,10 @@
+.profile__element{
+  
+  background: transparent;
+  margin: 0;
+  padding: 0 ;
+  position: relative;
+}
+.profile__element::before{
+  opacity: 0.8;
+}
