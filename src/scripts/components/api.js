@@ -63,10 +63,37 @@ export class Api {
         return res.json()// Объекты
       } return Promise.reject('Сервер недостпен!!!!!!!')
     })
+    .then((data)=>{
+      console.log(data, "data _api")
+      return data
+    })
     .catch((err)=>{
       console.log(err, "err из catch addInfoProfile");
     })
   }
+
+  addInfoProfileAvatar(data){
+    fetch(this._url, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar:data.avatar
+      })
+    })
+    .then((res)=>{
+      if (res.ok){ //true false
+        return res.json()// Объекты
+      } return Promise.reject('Сервер недостпен!!!!!!!')
+    })
+    .then((data)=>{
+      //console.log(data, "data _api addInfoProfileAvatar")
+      return data
+    })
+    .catch((err)=>{
+      console.log(err, "err из catch addInfoProfile");
+    })
+  }
+
 }
 
 
