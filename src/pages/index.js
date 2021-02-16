@@ -15,6 +15,7 @@ import {
   popupEditForm,
   popupImg,
   popupCard,
+  popupAvatar,
   nameInput,
   jobInput,
   profileInfoNameNode,
@@ -22,6 +23,8 @@ import {
   listContainerElement,
   //initialCards,
   validationConfig,
+
+  profileAvatarButton
 } from "../scripts/utils/constants.js";
 //import { data } from "autoprefixer";
 
@@ -36,15 +39,18 @@ const apiEddit = new Api({
 
 
 
-
+const avatarValidator = new FormValidator(validationConfig, popupAvatar);
 const cardValidator = new FormValidator(validationConfig, popupCard);
 const edditValidator = new FormValidator(validationConfig, popupEditForm);
 
 const edditPopup = new Popup(popupEditForm);
 const cardPopup = new Popup(popupCard);
+const avatarPopup = new Popup(popupAvatar);
+
 const popupWithImage = new PopupWithImage(popupImg);
 const popupWithFormCard = new PopupWithForm(popupCard, addNewObjectCard);
 const popupWithFormEddit = new PopupWithForm(popupEditForm, formSubmitHandler, apiEddit);
+const popupWithFormAvatar = new PopupWithForm(popupAvatar,)
 const userInfo = new UserInfo({
   profileNameSelector: ".profile__info-name",
   profileJobSelector: ".profile__info-job",
@@ -68,6 +74,12 @@ function openPopupCard() {
   cardValidator.clearError();
 }
 
+function openPopupAvatar(){
+  avatarPopup.open();
+  avatarValidator.setButtonState();
+  avatarValidator.clearError()
+}
+
 function openPopupImg(link, name) {
 
   popupWithImage.open(link, name);
@@ -89,7 +101,9 @@ popupWithImage.setEventListeners();
 
 profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
 profileButtonAdd.addEventListener("click", openPopupCard);
+profileAvatarButton.addEventListener("click", openPopupAvatar);
 
+avatarValidator.enableValidation();
 cardValidator.enableValidation();
 edditValidator.enableValidation();
 //!_____________________________________________________________________
@@ -100,20 +114,6 @@ const api = new Api({
     "content-type":'application/json'
   }
 })
-// const apiEddit = new Api({
-//   url:"https://mesto.nomoreparties.co/v1/cohort-20/users/me",
-//   headers:{
-//     authorization:'4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
-//     "content-type":'application/json'
-//   }
-// })
-
-
-// apiEddit.addInfoProfile()
-//   .then((data)=>{
-//     console.log(data, "")
-//   })
-
 
 function addNewObjectCard(dataCard) {// функция добовляет в разметку карточку с СЕРВЕРА по ыг
 
@@ -158,10 +158,9 @@ api.getAllCarads()
 
     apiEddit.getInfoProfile()// запрос на данные пользователя
     .then((data)=>{
-      document.querySelector('.profile__avatar-img').setAttribute("src", data.avatar); // установка аватара из пришедших данных о пользователе с сервера
+     // document.querySelector('.profile__avatar-img').setAttribute("src", data.avatar); // установка аватара из пришедших данных о пользователе с сервера
+     profileAvatarButton.style.backgroundImage =  `url(${data.avatar})`; //добавления аватара в background-image
 
-      userInfo.setUserInfo(data);
-      console.log(data, "data из getinfoprofile")
     })
     .catch((err)=>{
       console.log(err, "err из index.js -apiEdditAnswer")

@@ -67,4 +67,7 @@
 
 @import url(../../src/blocks/popup/__container/_type/popup__container_type_form.css);
 @import url(../../src/blocks/profile/__avatar-icon/profile__avatar-icon.css);
-@import url(../../src/blocks/profile/__element/profile_elment.css);
+
+@import url(../../src/blocks/popup/_type/popup_type_avatar.css);
+@import url(../../src/blocks/popup/__container/_type/popup__container_type_avatar.css);
+@import url(../../src/blocks/popup/__button-close/_type/popup__button-close_type_avatar.css)
