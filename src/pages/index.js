@@ -29,6 +29,7 @@ import {
 //import { data } from "autoprefixer";
 //import { data } from "autoprefixer";
 //import { data } from "autoprefixer";
+//import { data } from "autoprefixer";
 
 
 const apiEddit = new Api({
@@ -159,6 +160,7 @@ api.getAllCarads()
         listContainerElement
       );
       sectionDefault.renderCard(); // вызвали метод у экземпляра класса Section для формирования и добваления default карточeк
+      // checkMyCards(data);
     })
     .catch((err)=>{ // catch всегда вызывать из index.js
       console.log(err, "err из index.js")
@@ -171,6 +173,7 @@ api.getAllCarads()
      profileAvatarButton.style.backgroundImage =  `url(${data.avatar})`; //добавления аватара в background-image
      profileInfoNameNode.textContent = data.name;
      profileInfoJobNode.textContent = data.about;
+
     })
     .catch((err)=>{
       console.log(err, "err из index.js -apiEdditAnswer")
@@ -191,3 +194,13 @@ function submitAvatar (data){
 
 }
 
+// function checkMyCards(data){
+//   data.forEach((item)=>{
+//     const idOwnerCard = item.owner._id
+//     if (idOwnerCard === 'eb737b551021d96d37fd06c4' )
+//     console.log(idOwnerCard, "idOwnerCard");
+//   })
+//   const dataOwnerId = data
+//   console.log(dataOwnerId, "dataOwnerId")
+
+// }

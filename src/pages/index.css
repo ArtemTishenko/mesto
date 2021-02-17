@@ -43,6 +43,7 @@
 
 
 @import url(../../src/blocks/element/__delete/element__delete.css);
+@import url(../../src/blocks/element/__delete/element__delete_visible.css);
 @import url(../../src/blocks/element/__like/_active/element__like_active.css);
 
 
