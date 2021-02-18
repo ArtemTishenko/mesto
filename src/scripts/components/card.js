@@ -26,20 +26,21 @@ export class Card {
 
     //this._element.remove();
   }
-  _checkMyOwnCards(){
-    const idOwnerCard = this._item.owner._id;
-    if (idOwnerCard === 'eb737b551021d96d37fd06c4'){
-      this._cardElement.content.querySelector(".element__delete").classList.add("element__delete_visible")
-      console.log(this._cardElement.content.querySelector(".element__delete").classList, "TRASH")
-      console.log(idOwnerCard, "this._item из класса card")
-
-      //добавление свойства visible у корзинки карточки
+  checkIdCard(id){
+    if (id === "eb737b551021d96d37fd06c4"){
+      this.showDeleteButtonCard()
     }else{
       this._cardElement.content.querySelector(".element__delete").classList.remove("element__delete_visible")//удаления свойства visible у корзинки карточки
     }
 
   }
+
+  showDeleteButtonCard(){
+    this._cardElement.content.querySelector(".element__delete").classList.add("element__delete_visible")
+  }
+
   _setEventListeners() {// вызов слушателей: лайк, удаление, popupImg ->(open modal -> добавление слушателя клика по overlay)
+    
     const elementDelete = this._element.querySelector(".element__delete");
     const elementLike = this._element.querySelector(".element__like");
     const elementImg = this._element.querySelector(".element__img");
@@ -51,7 +52,7 @@ export class Card {
       this._clickLikeButton();
     });
     elementImg.addEventListener("click", () => this._handleCardClick(this._link, this._name));
-    this._checkMyOwnCards();
+    //this._checkMyOwnCards();
   }
   generateCard() {
     this._element = this._getTemplate(); // клонирование шаблона карточки
@@ -64,7 +65,7 @@ export class Card {
       .setAttribute("alt", `${this._name}`);
 
     this._setEventListeners();
-
+   // this._checkMyOwnCards();
     return this._element;
   }
 

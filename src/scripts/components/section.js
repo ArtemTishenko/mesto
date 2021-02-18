@@ -6,14 +6,13 @@ export class Section {
   }
 
   renderCard(item) {
-    //console.log(item, "item")
-    //this.saveCardToServer(item);
     this._renderer(item);
   }
 
   addItem(elementCard) {
     // принимает DOM элемент и добавляет его в контейнер
     this._container.append(elementCard);
+    
   }
   addNewItem(elementCard) {
 

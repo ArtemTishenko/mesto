@@ -131,10 +131,23 @@ function addNewObjectCard(dataCard) {// функция добовляет в р�
     {
       items: dataCard,
       renderer: () => {
+       
         api.addCard(dataCard)
-        const card = new Card(dataCard, ".template", openPopupImg, api);
-        const cardElement = card.generateCard();
-        sectionNewCard.addNewItem(cardElement);
+          .then((data)=>{
+            const idOwnerCard = data.owner._id; 
+
+            if (idOwnerCard === "eb737b551021d96d37fd06c4"){
+              const card = new Card(
+                 {name:data.name,link:data.link},
+                 ".template", 
+                 openPopupImg, 
+                 api);
+              const cardElement = card.generateCard();
+              card.showDeleteButtonCard();
+              sectionNewCard.addNewItem(cardElement);
+            } 
+          }) 
+       
       },
     },
     listContainerElement,
@@ -152,6 +165,7 @@ api.getAllCarads()
           renderer: () => {
             data.forEach((initialCard) => {// перебор по массивву данных с начальными карточкамами
               const card = new Card(initialCard, ".template", openPopupImg); // создали экземпляр для каждой карточки
+              card.checkIdCard(initialCard.owner._id);// проверка что карточка моя и ее можно удалять
               const cardElement = card.generateCard(); //сгенерировали зполненный шаблон карточки
               sectionDefault.addItem(cardElement); // добавили в разметку
             });
@@ -161,6 +175,7 @@ api.getAllCarads()
       );
       sectionDefault.renderCard(); // вызвали метод у экземпляра класса Section для формирования и добваления default карточeк
       // checkMyCards(data);
+
     })
     .catch((err)=>{ // catch всегда вызывать из index.js
       console.log(err, "err из index.js")
