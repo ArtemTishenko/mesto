@@ -5,6 +5,8 @@ export const popupImg = document.querySelector(".popup_type_img");
 
 export const popupCard = document.querySelector(".popup_type_card");
 export const popupAvatar = document.querySelector(".popup_type_avatar");
+export const popupDelete = document.querySelector(".popup_type_card-delete")
+
        const popupContainerEdditForm = document.querySelector(".popup__container_type_eddit-form");
 export const nameInput = popupContainerEdditForm.querySelector(".popup__field_type_name");
 export const jobInput = popupContainerEdditForm.querySelector(".popup__field_type_job");

@@ -16,6 +16,7 @@ import {
   popupImg,
   popupCard,
   popupAvatar,
+  popupDelete,
   nameInput,
   jobInput,
   profileInfoNameNode,
@@ -53,6 +54,7 @@ const edditValidator = new FormValidator(validationConfig, popupEditForm);
 const edditPopup = new Popup(popupEditForm);
 const cardPopup = new Popup(popupCard);
 const avatarPopup = new Popup(popupAvatar);
+const deletePopup = new Popup(popupDelete);
 
 const popupWithImage = new PopupWithImage(popupImg);
 const popupWithFormEddit = new PopupWithForm(popupEditForm, formSubmitHandler);
@@ -100,6 +102,10 @@ function formSubmitHandler(data) {
   edditPopup.close();
 }
 
+function openPopupDelete(){
+  deletePopup.open()
+
+}
 
 
 
@@ -140,7 +146,8 @@ function addNewObjectCard(dataCard) {// функция добовляет в р�
               const card = new Card(
                  {name:data.name,link:data.link},
                  ".template", 
-                 openPopupImg, 
+                 openPopupImg,
+                 openPopupDelete,
                  api);
               const cardElement = card.generateCard();
               card.showDeleteButtonCard();

@@ -1,6 +1,6 @@
 //import {openPopupImg} from '../../src/pages/index.js';
 export class Card {
-  constructor(item, cardSelector, handleCardClick, api, popupDelete) {
+  constructor(item, cardSelector, handleCardClick, handleDeleteClick, api) {
     this._item = item;
     this._name = item.name;
     this._link = item.link;
@@ -8,8 +8,9 @@ export class Card {
     this._handleCardClick = handleCardClick;
     this._api = api // приняли экземпляр класса Api
     this._cardElement = document.querySelector(this._cardSelector);
-    this._elementDelete = this._element//.querySelector(".element__delete");
-    this._popupDelete = popupDelete; // запихнуть из индекса
+    this._handleDeleteClick = handleDeleteClick;
+    //this._elementDelete = this._element//.querySelector(".element__delete");
+    
   }
   _getTemplate() {// возвращает шаблон разметки карточки
     const cardElement = this._cardElement
@@ -24,7 +25,7 @@ export class Card {
   }
   _clickRemoveButton() {
 
-    //this._element.remove();
+    this._element.remove();
   }
   checkIdCard(id){
     if (id === "eb737b551021d96d37fd06c4"){
@@ -46,7 +47,10 @@ export class Card {
     const elementImg = this._element.querySelector(".element__img");
 
     elementDelete.addEventListener("click", () => {
-      this._clickRemoveButton();
+      this._handleDeleteClick
+      console.log( this._handleDeleteClick, "на меня нажали")
+      //this._clickRemoveButton(); так было
+    
     });
     elementLike.addEventListener("click", () => {
       this._clickLikeButton();
