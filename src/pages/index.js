@@ -60,7 +60,8 @@ const popupWithImage = new PopupWithImage(popupImg);
 const popupWithFormEddit = new PopupWithForm(popupEditForm, formSubmitHandler);
 const popupWithFormCard = new PopupWithForm(popupCard, addNewObjectCard);
 
-const popupWithFormAvatar = new PopupWithForm(popupAvatar,submitAvatar)
+const popupWithFormAvatar = new PopupWithForm(popupAvatar, submitAvatar);
+//const popupWithFormDelete = new PopupWithForm(popupDelete, submitDeleteCard)
 
 const userInfo = new UserInfo({
   profileNameSelector: ".profile__info-name",
@@ -102,11 +103,47 @@ function formSubmitHandler(data) {
   edditPopup.close();
 }
 
-function openPopupDelete(){
-  deletePopup.open()
+function openPopupDelete(data, element){
+  console.log(element, "прокинутый element");
+  console.log(data, "прокинутые данные с сервера");
+  deletePopup.open();
+  const popupWithFormDelete = new PopupWithForm(popupDelete, ()=>{
+    const apiDelete = new Api({
+      url:`https://mesto.nomoreparties.co/v1/cohort-20/cards/${data._id}`,
+      headers:{
+        authorization: '4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
+        "content-type":'application/json'
+      }
+    });
+    apiDelete.deleteCard()
+
+    element.remove();
+    popupWithFormDelete.close();
+
+  })
+  popupWithFormDelete.setEventListeners();//слышатель закрытия по кнопке
+
+
+
+
+
 
 }
 
+// function submitDeleteCard(data){
+//   console.log(data, "data submitDeleteCard");
+//   const apiDelete = new Api({
+//    url:`https://mesto.nomoreparties.co/v1/cohort-20/cards/${data._id}`,
+//    headers:{
+//     authorization: '4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
+//     "content-type":'application/json'
+//     }
+//   })
+
+//   apiDelete.deleteCard()
+
+//   popupWithFormDelete.close()
+// }
 
 
 
@@ -114,6 +151,7 @@ popupWithFormCard.setEventListeners(); // установка слушатель 
 popupWithFormEddit.setEventListeners();
 popupWithImage.setEventListeners();
 popupWithFormAvatar.setEventListeners();// Установка слушателя клика по иконке закрытия попапа popupAvatar
+//popupWithFormDelete.setEventListeners();// Установка слушателя клика по иконке закрытия попапа удаления карточки
 
 profileButtonInfoEddit.addEventListener("click", openPopupEdditForm);
 profileButtonAdd.addEventListener("click", openPopupCard);
@@ -131,30 +169,34 @@ const api = new Api({
   }
 })
 
+
+
 function addNewObjectCard(dataCard) {// функция добовляет в разметку карточку с СЕРВЕРА по ыг
 
   const sectionNewCard = new Section(
     {
       items: dataCard,
       renderer: () => {
-       
+
         api.addCard(dataCard)
           .then((data)=>{
-            const idOwnerCard = data.owner._id; 
+            console.log(data, "data sectionNewCard")
+            const idOwnerCard = data.owner._id;
 
             if (idOwnerCard === "eb737b551021d96d37fd06c4"){
               const card = new Card(
                  {name:data.name,link:data.link},
-                 ".template", 
+                 ".template",
                  openPopupImg,
                  openPopupDelete,
                  api);
-              const cardElement = card.generateCard();
               card.showDeleteButtonCard();
+              const cardElement = card.generateCard();
+
               sectionNewCard.addNewItem(cardElement);
-            } 
-          }) 
-       
+            }
+          })
+
       },
     },
     listContainerElement,
@@ -171,7 +213,7 @@ api.getAllCarads()
           items: data,
           renderer: () => {
             data.forEach((initialCard) => {// перебор по массивву данных с начальными карточкамами
-              const card = new Card(initialCard, ".template", openPopupImg); // создали экземпляр для каждой карточки
+              const card = new Card(initialCard, ".template", openPopupImg, openPopupDelete); // создали экземпляр для каждой карточки
               card.checkIdCard(initialCard.owner._id);// проверка что карточка моя и ее можно удалять
               const cardElement = card.generateCard(); //сгенерировали зполненный шаблон карточки
               sectionDefault.addItem(cardElement); // добавили в разметку
@@ -209,20 +251,10 @@ const apiEdditAvatar = new Api({
       }
     })
 function submitAvatar (data){
-  //console.log(data, "дата аватар")
   apiEdditAvatar.addInfoProfileAvatar(data);
   profileAvatarButton.style.backgroundImage =  `url(${data.avatar})`;
   popupWithFormAvatar.close();
 
 }
 
-// function checkMyCards(data){
-//   data.forEach((item)=>{
-//     const idOwnerCard = item.owner._id
-//     if (idOwnerCard === 'eb737b551021d96d37fd06c4' )
-//     console.log(idOwnerCard, "idOwnerCard");
-//   })
-//   const dataOwnerId = data
-//   console.log(dataOwnerId, "dataOwnerId")
 
-// }

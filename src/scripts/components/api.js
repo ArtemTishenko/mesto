@@ -94,6 +94,21 @@ export class Api {
     })
   }
 
+  deleteCard(){
+    fetch(this._url, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+    .then((res)=>{
+      if (res.ok){ //true false
+        return res.json()// Объекты
+      } return Promise.reject('Сервер недостпен!!!!!!!')
+    })
+    .catch((err)=>{
+      console.log(err, "err из deleteCard")
+    })
+  }
+
 }
 
 

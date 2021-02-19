@@ -8,7 +8,7 @@ export class PopupWithForm extends Popup {
     this._popupInputList = this._popupContainer.querySelectorAll(
       ".popup__field"
     );
-    // this._api = api;
+
   }
   _getInputValues() {
     const inputData = {};
@@ -21,7 +21,7 @@ export class PopupWithForm extends Popup {
 
   _formSubmit = (event) => {
     event.preventDefault();
-
+                                      // попробовать сюда передать метод api
     let data = this._getInputValues();
     this._callBackSubmitForm(data);
 
