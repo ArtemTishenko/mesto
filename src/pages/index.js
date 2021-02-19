@@ -115,7 +115,9 @@ function openPopupDelete(data, element){
         "content-type":'application/json'
       }
     });
+    
     apiDelete.deleteCard()
+   
 
     element.remove();
     popupWithFormDelete.close();
@@ -182,10 +184,9 @@ function addNewObjectCard(dataCard) {// функция добовляет в р�
           .then((data)=>{
             console.log(data, "data sectionNewCard")
             const idOwnerCard = data.owner._id;
-
-            if (idOwnerCard === "eb737b551021d96d37fd06c4"){
+            if (idOwnerCard === "eb737b551021d96d37fd06c4"){//проверка по номеру токена, моя ли это картачка
               const card = new Card(
-                 {name:data.name,link:data.link},
+                 data, // передается объект с двумя ключ-значение
                  ".template",
                  openPopupImg,
                  openPopupDelete,

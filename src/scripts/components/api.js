@@ -94,7 +94,7 @@ export class Api {
     })
   }
 
-  deleteCard(){
+  deleteCard(data){
     fetch(this._url, {
       method: 'DELETE',
       headers: this._headers

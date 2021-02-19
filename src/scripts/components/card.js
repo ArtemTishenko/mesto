@@ -8,8 +8,8 @@ export class Card {
     this._handleCardClick = handleCardClick;
     this._api = api // приняли экземпляр класса Api
     this._cardElement = document.querySelector(this._cardSelector);
-    this._handleDeleteClick = handleDeleteClick;
-    //this._elementDelete = this._element//.querySelector(".element__delete");
+    this._handleDeleteClick = handleDeleteClick;// popupDelete
+   
 
   }
   _getTemplate() {// возвращает шаблон разметки карточки
@@ -48,15 +48,20 @@ export class Card {
 
     elementDelete.addEventListener("click", () => {
       const data = this._item;
-      const element = this._cardElement; console.log(element)// прокидываем data с сервера в index.js для функции open popupDelete
-      this._handleDeleteClick(data, element);
+      
+      const element = this._element; 
+      console.log(element, "прокидываемый элемент")// прокидываем data с сервера в index.js для функции open popupDelete
+      this._handleDeleteClick(data, element); // в popupDelete передается data-объект с сервера, element- DOM разметка нового экземпляра карточки
       console.log(this._item, "на меня нажали")
 
     });
     elementLike.addEventListener("click", () => {
       this._clickLikeButton();
     });
-    elementImg.addEventListener("click", () => this._handleCardClick(this._link, this._name));
+    elementImg.addEventListener("click", () =>{ 
+      this._handleCardClick(this._link, this._name
+      )
+    });
 
   }
   generateCard() {
