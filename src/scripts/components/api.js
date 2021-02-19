@@ -93,7 +93,6 @@ export class Api {
       console.log(err, "err из catch addInfoProfile");
     })
   }
-
   deleteCard(data){
     fetch(this._url, {
       method: 'DELETE',
@@ -104,11 +103,28 @@ export class Api {
         return res.json()// Объекты
       } return Promise.reject('Сервер недостпен!!!!!!!')
     })
+    .then((data)=>{
+      //console.log(data, "data _api addInfoProfileAvatar")
+      return data
+    })
     .catch((err)=>{
       console.log(err, "err из deleteCard")
     })
   }
 
+  putLike(){
+    fetch(this._url,{
+      method:'PUT',
+      headers: this._headers
+    }).then((res)=>{
+      if (res.ok){ //true false
+        return res.json()// Объекты
+      } return Promise.reject('Сервер недоступен!!!!!!!')
+    })
+    .catch((err)=>{
+      console.log(err, "err из catch putLike");
+    })
+  }
 }
 
 
