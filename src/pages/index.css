@@ -45,6 +45,8 @@
 @import url(../../src/blocks/element/__delete/element__delete.css);
 @import url(../../src/blocks/element/__delete/element__delete_visible.css);
 @import url(../../src/blocks/element/__like/_active/element__like_active.css);
+@import url(../../src/blocks/element/__like-counter/element__like-counter.css);
+@import url(../../src/blocks/element/__counter/element__counter.css);
 
 
 

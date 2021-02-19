@@ -1,6 +1,9 @@
 .element__name {
   display: flex;
   flex-direction: row;
-  padding:25px 15px 31px 21px;
-  align-items: baseline;
+  padding: 25px 15px 31px 21px;
+
+  align-content: space-between;
+  align-items: center;
 }
+
