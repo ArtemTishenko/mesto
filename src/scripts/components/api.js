@@ -12,7 +12,7 @@ export class Api {
       if (res.ok){ //true false
         return res.json()// Объекты
       }
-      return Promise.reject('Сервер недостпен!!!!!!!')
+      return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
       .catch((err)=>{
         console.log(err, "err из getAllCarads")
       })
@@ -28,7 +28,7 @@ export class Api {
         if (res.ok){ //true false
           return res.json()// Объекты
         }
-        return Promise.reject('Сервер недостпен!!!!!!!')
+        return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
       .catch((err)=>{
           console.log(err, "err из addCard")
       })
@@ -42,7 +42,7 @@ export class Api {
     }).then((res)=>{
       if (res.ok){ //true false
         return res.json()// Объекты
-      }return Promise.reject('Сервер недостпен!!!!!!!')
+      }return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
       .catch((err)=>{
         console.log(err, "err из getAllCarads")
       })
@@ -61,7 +61,7 @@ export class Api {
     .then((res)=>{
       if (res.ok){ //true false
         return res.json()// Объекты
-      } return Promise.reject('Сервер недостпен!!!!!!!')
+      } return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
     })
     .then((data)=>{
       console.log(data, "data _api")
@@ -83,7 +83,7 @@ export class Api {
     .then((res)=>{
       if (res.ok){ //true false
         return res.json()// Объекты
-      } return Promise.reject('Сервер недостпен!!!!!!!')
+      } return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
     })
     .then((data)=>{
       //console.log(data, "data _api addInfoProfileAvatar")
@@ -101,7 +101,7 @@ export class Api {
     .then((res)=>{
       if (res.ok){ //true false
         return res.json()// Объекты
-      } return Promise.reject('Сервер недостпен!!!!!!!')
+      } return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
     })
     .then((data)=>{
       //console.log(data, "data _api addInfoProfileAvatar")
@@ -119,7 +119,7 @@ export class Api {
     }).then((res)=>{
       if (res.ok){ //true false
         return res.json()// Объекты
-      } return Promise.reject('Сервер недоступен!!!!!!!')
+      } return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
     })
     .catch((err)=>{
       console.log(err, "err из catch putLike");

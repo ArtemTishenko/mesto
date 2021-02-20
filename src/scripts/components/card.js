@@ -1,15 +1,23 @@
 
 export class Card {
-  constructor(item, cardSelector, handleCardClick, handleDeleteClick, api) {
-    this._item = item;
-    this._name = item.name;
-    this._link = item.link;
+  constructor(itemData, cardSelector, handleCardClick, handleDeleteClick) {
+    this._item = itemData;
+    this._name = this._item.name;
+    this._link = this._item.link;
+    this._cardId = this._item._id;
+    this._ownerId = this._item.owner._id;
+
     this._cardSelector = cardSelector;
-    this._handleCardClick = handleCardClick;
-    this._api = api // приняли экземпляр класса Api
     this._cardElement = document.querySelector(this._cardSelector);
+  
+
+    this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick;// popupDelete
-   
+
+    
+    // this._cardElementLike = this._cardElement.querySelector(".element__like");
+    // this._cardImage = this._cardElement.querySelector(".element__img");
+    
 
   }
   _getTemplate() {// возвращает шаблон разметки карточки
@@ -27,7 +35,7 @@ export class Card {
 
     this._element.remove();
   }
-  checkIdCard(id){
+  _checkIdCard(id){
     if (id === "eb737b551021d96d37fd06c4"){
       this.showDeleteButtonCard()
     }else{
@@ -43,18 +51,18 @@ export class Card {
   _setEventListeners() {// вызов слушателей: лайк, удаление, popupImg ->(open modal -> добавление слушателя клика по overlay)
 
     const elementDelete = this._element.querySelector(".element__delete");
+   
     const elementLike = this._element.querySelector(".element__like");
     const elementImg = this._element.querySelector(".element__img");
 
     elementDelete.addEventListener("click", () => {
-      const data = this._item;
-      
-      const element = this._element; 
-      console.log(element, "прокидываемый элемент")// прокидываем data с сервера в index.js для функции open popupDelete
-      this._handleDeleteClick(data, element); // в popupDelete передается data-объект с сервера, element- DOM разметка нового экземпляра карточки
-      console.log(this._item, "на меня нажали")
-
+      //const data = this._item;
+      //const element = this._element; 
+      //console.log(element, "прокидываемый элемент")// прокидываем data с сервера в index.js для функции open popupDelete
+      // console.log(this._item, "на меня нажали")
+      this._handleDeleteClick(this._item, this._cardElement); // в popupDelete передается data-объект с сервера, element- DOM разметка нового экземпляра карточки
     });
+
     elementLike.addEventListener("click", () => {
       this._clickLikeButton();
     });
@@ -74,7 +82,21 @@ export class Card {
       .querySelector(".element__img")
       .setAttribute("alt", `${this._name}`);
 
+    this._checkIdCard(this._ownerId)
+
     this._setEventListeners();
+  
+  
+
+    console.log(this._item,"this._item(itemData)");
+    console.log(this._name,"this._name");
+    console.log(this._link,"this._link");
+    console.log(this._cardId, "this._cardId");
+    console.log(this._ownerId, "this._ownerId");
+    console.log('_____________________________________');
+    console.log(this._element, "this._cardElement");
+    console.log(this._cardElementTrash, "this._cardElementTrash");
+
 
     return this._element;
   }
