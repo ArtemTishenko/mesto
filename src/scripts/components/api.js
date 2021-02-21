@@ -93,7 +93,7 @@ export class Api {
       console.log(err, "err из catch addInfoProfile");
     })
   }
-  deleteCard(data){
+  deleteCard(){
     fetch(this._url, {
       method: 'DELETE',
       headers: this._headers
@@ -121,12 +121,5 @@ export class Api {
         return res.json()// Объекты
       } return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
     })
-    .catch((err)=>{
-      console.log(err, "err из catch putLike");
-    })
   }
 }
-
-
-
-

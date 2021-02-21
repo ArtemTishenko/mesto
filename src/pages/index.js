@@ -103,28 +103,35 @@ function formSubmitHandler(data) {
   edditPopup.close();
 }
 
+
 function openPopupDelete(data, element){
   console.log(element, "прокинутый element");
   console.log(data, "прокинутые данные с сервера");
   deletePopup.open();
-  const popupWithFormDelete = new PopupWithForm(popupDelete, ()=>{
-    const apiDelete = new Api({
-      url:`https://mesto.nomoreparties.co/v1/cohort-20/cards/${data._id}`,
-      headers:{
-        authorization: '4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
-        "content-type":'application/json'
-      }
-    });
-    
-    apiDelete.deleteCard()
-   
+  const popupWithFormDelete = new PopupWithForm(popupDelete, handlePopupDeleteSubmit)
+  //popupWithFormDelete.setEventListeners();//слышатель закрытия по кнопке
+  popupWithFormDelete.setEventListenerSubmitConfirmation(data, element);
 
-    element.remove();
-    popupWithFormDelete.close();
 
+}
+
+function handlePopupDeleteSubmit (data, element){
+  console.log(data._id, "data_id из handlePopupDeleteSubmit");
+  console.log(element, "element");
+  const apiDelete = new Api({
+    url:`https://mesto.nomoreparties.co/v1/cohort-20/cards/${data._id}`,
+    headers:{
+      authorization: '4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
+      "content-type":'application/json'
+    }
   })
-  popupWithFormDelete.setEventListeners();//слышатель закрытия по кнопке
 
+
+  apiDelete.deleteCard()
+
+  element.remove();
+
+  //popupWithFormDelete.close();
 }
 
 popupWithFormCard.setEventListeners(); // установка слушатель клика по иконке закрытия попапа
@@ -165,12 +172,12 @@ function addNewObjectCard(dataCard) {// функция добовляет в р�
               ".template",
               openPopupImg,
               openPopupDelete,
+
             );
             card.showDeleteButtonCard();
             const cardElement = card.generateCard();
-
             sectionNewCard.addNewItem(cardElement);
-           
+
           })
 
       },
@@ -183,13 +190,16 @@ function addNewObjectCard(dataCard) {// функция добовляет в р�
 
 api.getAllCarads()
     .then((data)=>{
-      
+
       const sectionDefault = new Section(//создаем экземпляр класса для начальных карточек
         {
           items: data,
           renderer: () => {
             data.forEach((initialCard) => {// перебор по массивву данных с начальными карточкамами
-              const card = new Card(initialCard, ".template", openPopupImg, openPopupDelete); // создали экземпляр для каждой карточки
+              const card = new Card(initialCard,
+                ".template",
+                 openPopupImg,
+                 openPopupDelete); // создали экземпляр для каждой карточки
               card._checkIdCard(initialCard.owner._id);// проверка что карточка моя и ее можно удалять
               const cardElement = card.generateCard(); //сгенерировали зполненный шаблон карточки
               sectionDefault.addItem(cardElement); // добавили в разметку
@@ -199,7 +209,7 @@ api.getAllCarads()
         listContainerElement
       );
       sectionDefault.renderCard(); // вызвали метод у экземпляра класса Section для формирования и добваления default карточeк
-      
+
 
     })
     .catch((err)=>{ // catch всегда вызывать из index.js
@@ -232,5 +242,8 @@ function submitAvatar (data){
   popupWithFormAvatar.close();
 
 }
-
-
+//для рефакторинга
+// function createNewCard(cardData){
+//   const card = new Card(cardData, ".template", openPopupImg, openPopupDelete);
+//      return card
+// }

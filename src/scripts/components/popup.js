@@ -2,6 +2,9 @@
 export class Popup {
   constructor(popupElement) {// селектор актинвого попапа
     this._popupElement = popupElement;
+    this._popupContainer = this._popupElement.querySelector(
+      ".popup__container_type_form"
+    );
   }
 
   open() {
@@ -46,6 +49,7 @@ export class Popup {
       this.close();
     })
   }
+
 }
 
 
