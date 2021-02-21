@@ -116,10 +116,29 @@ export class Api {
     fetch(this._url,{
       method:'PUT',
       headers: this._headers
-    }).then((res)=>{
+    })
+    .then((res)=>{
       if (res.ok){ //true false
         return res.json()// Объекты
       } return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
+    })
+    .catch((err)=>{
+      console.log(err, "err из putlike")
+    })
+  }
+
+  deleteLlike(){
+    fetch(this._url,{
+      method:'DELETE',
+      headers: this._headers
+    })
+    .then((res)=>{
+      if (res.ok){ //true false
+        return res.json()// Объекты
+      } return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
+    })
+    .catch((err)=>{
+      console.log(err, "err из deleteLike")
     })
   }
 }

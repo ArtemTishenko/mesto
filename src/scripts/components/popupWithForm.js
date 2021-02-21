@@ -28,14 +28,25 @@ export class PopupWithForm extends Popup {
 
   };
 
+  // setEventListenerSubmitConfirmation(data,element){
+
+  //   this._popupContainer.addEventListener('submit', (event)=>{
+  //     event.preventDefault();
+  //     this._callBackSubmitForm(data,element)
+  //     this.close();
+  //     console.log(element, "element в setEventListenerSubmitConfirmation")
+  //   })
+  // }
   setEventListenerSubmitConfirmation(data,element){
 
-    this._popupContainer.addEventListener('submit', (event)=>{
+    const listener = (event)=>{
       event.preventDefault();
       this._callBackSubmitForm(data,element)
       this.close();
-      console.log(element, "element в setEventListenerSubmitConfirmation")
-    })
+      this._popupContainer.removeEventListener("submit", listener)
+    }
+
+    this._popupContainer.addEventListener('submit', listener)
   }
 
   setEventListeners() {

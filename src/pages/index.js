@@ -1,4 +1,4 @@
-//import '../pages/index.css';
+import '../pages/index.css';
 import { Card } from "../scripts/components/card.js";
 
 import {FormValidator} from "../scripts/components/formValidator.js";
@@ -172,7 +172,7 @@ function addNewObjectCard(dataCard) {// функция добовляет в р�
               ".template",
               openPopupImg,
               openPopupDelete,
-
+              setLike
             );
             card.showDeleteButtonCard();
             const cardElement = card.generateCard();
@@ -199,7 +199,9 @@ api.getAllCarads()
               const card = new Card(initialCard,
                 ".template",
                  openPopupImg,
-                 openPopupDelete); // создали экземпляр для каждой карточки
+                 openPopupDelete,
+                 setLike
+              ); // создали экземпляр для каждой карточки
               card._checkIdCard(initialCard.owner._id);// проверка что карточка моя и ее можно удалять
               const cardElement = card.generateCard(); //сгенерировали зполненный шаблон карточки
               sectionDefault.addItem(cardElement); // добавили в разметку
@@ -242,6 +244,12 @@ function submitAvatar (data){
   popupWithFormAvatar.close();
 
 }
+
+
+function setLike(){
+
+}
+
 //для рефакторинга
 // function createNewCard(cardData){
 //   const card = new Card(cardData, ".template", openPopupImg, openPopupDelete);

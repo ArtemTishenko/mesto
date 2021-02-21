@@ -43,10 +43,11 @@ export class Card {
     }
 
   }
-
   showDeleteButtonCard(){
     this._cardElement.content.querySelector(".element__delete").classList.add("element__delete_visible")
   }
+
+
 
   _setEventListeners() {// вызов слушателей: лайк, удаление, popupImg ->(open modal -> добавление слушателя клика по overlay)
 
@@ -86,18 +87,6 @@ export class Card {
     this._checkIdCard(this._ownerId)
 
     this._setEventListeners();
-
-
-
-    // console.log(this._item,"this._item(itemData)");
-    // console.log(this._name,"this._name");
-    // console.log(this._link,"this._link");
-    // console.log(this._cardId, "this._cardId");
-    // console.log(this._ownerId, "this._ownerId");
-    // console.log('_____________________________________');
-    // console.log(this._element, "this._cardElement");
-   // console.log(this._cardElementTrash, "this._cardElementTrash");
-
 
     return this._element;
   }
