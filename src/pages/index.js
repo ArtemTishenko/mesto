@@ -1,4 +1,4 @@
-import '../pages/index.css';
+//import '../pages/index.css';
 import { Card } from "../scripts/components/card.js";
 
 import {FormValidator} from "../scripts/components/formValidator.js";
@@ -22,17 +22,35 @@ import {
   profileInfoNameNode,
   profileInfoJobNode,
   listContainerElement,
-  //initialCards,
   validationConfig,
-
-  profileAvatarButton
+  profileAvatarButton,
+  initialCards
 } from "../scripts/utils/constants.js";
-//import { data } from "autoprefixer";
-//import { data } from "autoprefixer";
-//import { data } from "autoprefixer";
-//import { data } from "autoprefixer";
 
+// const apiBaseLike = new Api({
+//   url:"https://mesto.nomoreparties.co/v1/cohort-20/",
+//   headers:{
+//     authorization: '4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
+//     "content-type":'application/json'
+//   }},
+//   'https://mesto.nomoreparties.co/v1/cohort-20/'
 
+// )
+
+const api = new Api({
+  url:"https://mesto.nomoreparties.co/v1/cohort-20/cards/",
+  headers:{
+    authorization: '4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
+    "content-type":'application/json'
+  }
+})
+const apiEdditAvatar = new Api({
+  url:"https://mesto.nomoreparties.co/v1/cohort-20/users/me/avatar",
+  headers:{
+    authorization:'4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
+    "content-type":'application/json'
+  }
+})
 const apiEddit = new Api({
   url:"https://mesto.nomoreparties.co/v1/cohort-20/users/me",
   headers:{
@@ -40,12 +58,6 @@ const apiEddit = new Api({
     "content-type":'application/json'
   }
 })
-
-
-
-
-
-
 
 const avatarValidator = new FormValidator(validationConfig, popupAvatar);
 const cardValidator = new FormValidator(validationConfig, popupCard);
@@ -57,16 +69,39 @@ const avatarPopup = new Popup(popupAvatar);
 const deletePopup = new Popup(popupDelete);
 
 const popupWithImage = new PopupWithImage(popupImg);
-const popupWithFormEddit = new PopupWithForm(popupEditForm, formSubmitHandler);
+const popupWithFormEddit = new PopupWithForm(popupEditForm, handlePopupProfileSubmit);
 const popupWithFormCard = new PopupWithForm(popupCard, addNewObjectCard);
 
-const popupWithFormAvatar = new PopupWithForm(popupAvatar, submitAvatar);
+const popupWithFormAvatar = new PopupWithForm(popupAvatar, handlePopupAvatareSubmit);
 //const popupWithFormDelete = new PopupWithForm(popupDelete, submitDeleteCard)
 
 const userInfo = new UserInfo({
   profileNameSelector: ".profile__info-name",
   profileJobSelector: ".profile__info-job",
 });
+function addNewObjectCard(dataCard) {// функция добовляет в разметку карточку с СЕРВЕРА по ыг
+
+  const sectionNewCard = new Section(
+    {
+      items: dataCard,
+      renderer: () => {
+
+        api.addCard(dataCard)
+          .then((data)=>{
+            const card = createNewCard(data);
+           // card.showDeleteButtonCard();
+            const cardElement = card.generateCard();
+            sectionNewCard.addNewItem(cardElement);
+            //cardElement.setLikeCard(dataCard.likes)
+          })
+
+      },
+    },
+    listContainerElement,
+  );
+  sectionNewCard.renderCard();
+  popupWithFormCard.close();
+}
 
 function openPopupEdditForm() {
   nameInput.value = userInfo.getUserInfo().name; //подтяжка с profile-info в форму
@@ -91,13 +126,18 @@ function openPopupAvatar(){
   avatarValidator.setButtonState();
   avatarValidator.clearError()
 }
+function handlePopupAvatareSubmit (data){
+  apiEdditAvatar.addInfoProfileAvatar(data);
+  profileAvatarButton.style.backgroundImage =  `url(${data.avatar})`;
+  popupWithFormAvatar.close();
+
+}
 
 function openPopupImg(link, name) {
 
   popupWithImage.open(link, name);
 }
-
-function formSubmitHandler(data) {
+function handlePopupProfileSubmit(data) {
   apiEddit.addInfoProfile(data);
   userInfo.setUserInfo(data); // вставляем новые значения методом setUserInfo класса UserInfo, data - данные полученные из класса PopupWithForm
   edditPopup.close();
@@ -105,19 +145,13 @@ function formSubmitHandler(data) {
 
 
 function openPopupDelete(data, element){
-  console.log(element, "прокинутый element");
-  console.log(data, "прокинутые данные с сервера");
   deletePopup.open();
   const popupWithFormDelete = new PopupWithForm(popupDelete, handlePopupDeleteSubmit)
-  //popupWithFormDelete.setEventListeners();//слышатель закрытия по кнопке
-  popupWithFormDelete.setEventListenerSubmitConfirmation(data, element);
-
-
+  popupWithFormDelete.setEventListenerSubmitConfirmation(data, element); // установили функцию слушателя по submit (вы уверены?)
+  //popupWithFormDelete.setEventListeners();// Установка слушателя клика по иконке закрытия попапа удаления карточки
 }
-
 function handlePopupDeleteSubmit (data, element){
-  console.log(data._id, "data_id из handlePopupDeleteSubmit");
-  console.log(element, "element");
+
   const apiDelete = new Api({
     url:`https://mesto.nomoreparties.co/v1/cohort-20/cards/${data._id}`,
     headers:{
@@ -126,13 +160,54 @@ function handlePopupDeleteSubmit (data, element){
     }
   })
 
-
   apiDelete.deleteCard()
 
   element.remove();
 
-  //popupWithFormDelete.close();
+
 }
+
+function setLike(dataCard, element, checkMyLike){ //this._handleLikeClick
+  const apiLike = new Api ({
+    url:`https://mesto.nomoreparties.co/v1/cohort-20/cards/likes/${dataCard._id}`,
+    headers:{
+      authorization:'4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
+      "content-type":'application/json'
+    }
+  })
+
+  if (checkMyLike){// если true - мой лайк есть, лайк надо удалить/ если false - лайка нет, надо добавить
+    //element.setLikeCard(dataCard.likes)
+    return apiLike.deleteLlike()
+      .then((data)=>{
+         console.log(data, "data из then api.deleteLike")
+        // console.log(dataCard.likes, "dataCard.likes")
+        element.removeLike()
+        element.countLikes(data.likes)
+        return data
+      })
+       .catch((err) => {
+        console.log(err);
+      });
+  }
+  else{
+   // element.setLikeCard(dataCard.likes)
+   return apiLike.putLike()
+      .then((data)=>{
+        // console.log(data, "data в apiLike.putlike")
+        // console.log(dataCard.likes, "dataCard.likes")
+        //element.setLikeCard(data.likes)
+        element.addLike();
+        element.countLikes(data.likes)
+        return data
+      })
+       .catch((err) => {
+        console.log(err);
+      });
+  }
+
+ }
+
 
 popupWithFormCard.setEventListeners(); // установка слушатель клика по иконке закрытия попапа
 popupWithFormEddit.setEventListeners();
@@ -148,45 +223,6 @@ avatarValidator.enableValidation();
 cardValidator.enableValidation();
 edditValidator.enableValidation();
 //!_____________________________________________________________________
-const api = new Api({
-  url:"https://mesto.nomoreparties.co/v1/cohort-20/cards/",
-  headers:{
-    authorization: '4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
-    "content-type":'application/json'
-  }
-})
-
-
-
-function addNewObjectCard(dataCard) {// функция добовляет в разметку карточку с СЕРВЕРА по ыг
-
-  const sectionNewCard = new Section(
-    {
-      items: dataCard,
-      renderer: () => {
-
-        api.addCard(dataCard)
-          .then((data)=>{
-            const card = new Card(
-              data, // передается объект с двумя ключ-значение из инпутов карточки
-              ".template",
-              openPopupImg,
-              openPopupDelete,
-              setLike
-            );
-            card.showDeleteButtonCard();
-            const cardElement = card.generateCard();
-            sectionNewCard.addNewItem(cardElement);
-
-          })
-
-      },
-    },
-    listContainerElement,
-  );
-  sectionNewCard.renderCard();
-  popupWithFormCard.close();
-}
 
 api.getAllCarads()
     .then((data)=>{
@@ -196,15 +232,11 @@ api.getAllCarads()
           items: data,
           renderer: () => {
             data.forEach((initialCard) => {// перебор по массивву данных с начальными карточкамами
-              const card = new Card(initialCard,
-                ".template",
-                 openPopupImg,
-                 openPopupDelete,
-                 setLike
-              ); // создали экземпляр для каждой карточки
+              const card = createNewCard(initialCard)// создали экземпляр для каждой карточки
               card._checkIdCard(initialCard.owner._id);// проверка что карточка моя и ее можно удалять
               const cardElement = card.generateCard(); //сгенерировали зполненный шаблон карточки
               sectionDefault.addItem(cardElement); // добавили в разметку
+
             });
           },
         },
@@ -219,39 +251,22 @@ api.getAllCarads()
     })
 
 
-    apiEddit.getInfoProfile()// запрос на данные пользователя
-    .then((data)=>{
-     // document.querySelector('.profile__avatar-img').setAttribute("src", data.avatar); // установка аватара из пришедших данных о пользователе с сервера
-     profileAvatarButton.style.backgroundImage =  `url(${data.avatar})`; //добавления аватара в background-image
-     profileInfoNameNode.textContent = data.name;
-     profileInfoJobNode.textContent = data.about;
+apiEddit.getInfoProfile()// запрос на данные пользователя
+  .then((data)=>{
+    // document.querySelector('.profile__avatar-img').setAttribute("src", data.avatar); // установка аватара из пришедших данных о пользователе с сервера
+    profileAvatarButton.style.backgroundImage =  `url(${data.avatar})`; //добавления аватара в background-image
+    profileInfoNameNode.textContent = data.name;
+    profileInfoJobNode.textContent = data.about;
 
-    })
-    .catch((err)=>{
-      console.log(err, "err из index.js -apiEdditAnswer")
-    });
+  })
+  .catch((err)=>{
+    console.log(err, "err из index.js -apiEdditAnswer")
+  });
 
-const apiEdditAvatar = new Api({
-      url:"https://mesto.nomoreparties.co/v1/cohort-20/users/me/avatar",
-      headers:{
-        authorization:'4056c30d-f7e0-4f36-a996-b3ca58e8ceb0',
-        "content-type":'application/json'
-      }
-    })
-function submitAvatar (data){
-  apiEdditAvatar.addInfoProfileAvatar(data);
-  profileAvatarButton.style.backgroundImage =  `url(${data.avatar})`;
-  popupWithFormAvatar.close();
 
+
+
+function createNewCard(cardData){
+  const card = new Card(cardData, ".template", openPopupImg, openPopupDelete, setLike );
+     return card
 }
-
-
-function setLike(){
-
-}
-
-//для рефакторинга
-// function createNewCard(cardData){
-//   const card = new Card(cardData, ".template", openPopupImg, openPopupDelete);
-//      return card
-// }

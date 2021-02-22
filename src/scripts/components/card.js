@@ -1,25 +1,31 @@
-
+//import { data } from "autoprefixer";
+import {Api} from "../../scripts/components/api.js"
 export class Card {
-  constructor(itemData, cardSelector, handleCardClick, handleDeleteClick) {
-    this._item = itemData;
+  constructor(itemData, cardSelector, handleCardClick, handleDeleteClick, handleLikeClick) {
+    this._item = itemData; // данные с сервера о карточке
     this._name = this._item.name;
     this._link = this._item.link;
     this._cardId = this._item._id;
     this._ownerId = this._item.owner._id;
-
+    this._likes = itemData.likes;
     this._cardSelector = cardSelector;
     this._cardElement = document.querySelector(this._cardSelector);
 
-
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick;// popupDelete
-
-
-    // this._cardElementLike = this._cardElement.querySelector(".element__like");
-    // this._cardImage = this._cardElement.querySelector(".element__img");
+    this._handleLikeClick = handleLikeClick;
 
 
   }
+  _likeLoaderWrapper = (dataCard, element, checkMyLike)=>{
+    this._handleLikeClick(dataCard, element, checkMyLike)
+      .then(({likes})=>{
+        console.log(likes)
+        this._likes = likes
+      })
+  }
+
+
   _getTemplate() {// возвращает шаблон разметки карточки
     const cardElement = this._cardElement
       .content.querySelector(".element")
@@ -32,7 +38,6 @@ export class Card {
       .classList.toggle("element__like_active");
   }
   _clickRemoveButton() {
-
     this._element.remove();
   }
   _checkIdCard(id){
@@ -41,13 +46,51 @@ export class Card {
     }else{
       this._cardElement.content.querySelector(".element__delete").classList.remove("element__delete_visible")//удаления свойства visible у корзинки карточки
     }
-
   }
   showDeleteButtonCard(){
     this._cardElement.content.querySelector(".element__delete").classList.add("element__delete_visible")
   }
 
+  _checkLike(){ //true/false
 
+    return this._likes.some((like)=>{
+      return like._id === "eb737b551021d96d37fd06c4"
+    })
+  }
+
+  // setLikeCard(dataLikes){
+  //   const counterElemnt = this._element.querySelector(".element__counter");
+  //   counterElemnt.textContent = dataLikes.length;
+
+  //   if (this._checkLike()){
+
+  //   }else{
+  //     //counterElemnt.textContent = dataLikes.length;
+  //     console.log(dataLikes, "dataLikes ")
+  //     //this._element.querySelector(".element__like").classList.add("element__like_active");
+
+  //   }
+  //   //console.log(counterElemnt, "counterElement")
+  // }
+
+  addLike(){
+    this._element.querySelector(".element__like").classList.add("element__like_active");
+  }
+  removeLike(){
+    this._element.querySelector(".element__like").classList.remove("element__like_active");
+  }
+  countLikes(dataCardLikes){
+    const counterElemnt = this._element.querySelector(".element__counter");
+    counterElemnt.textContent = dataCardLikes.length;
+    console.log(dataCardLikes.length, "dataCard.likes в функции countLikes")
+  }
+  checkMylike(){
+    if(this._checkLike()){// если true - мой лайк есть/ false -моего лайк нет
+      this.addLike()
+    }else{
+      this.removeLike()
+    }
+  }
 
   _setEventListeners() {// вызов слушателей: лайк, удаление, popupImg ->(open modal -> добавление слушателя клика по overlay)
 
@@ -59,14 +102,20 @@ export class Card {
     elementDelete.addEventListener("click", () => {
       //const data = this._item;
       const element = this._element;
-      console.log(element, "прокидываемый элемент")// прокидываем data с сервера в index.js для функции open popupDelete
-       console.log(this._item, "нажатая картинка")
       this._handleDeleteClick(this._item,element); // в popupDelete передается data-объект с сервера, element- DOM разметка нового экземпляра карточки
     });
-
+    //!___________________________________________________________________
     elementLike.addEventListener("click", () => {
-      this._clickLikeButton();
+      // const testChekingLike = this._checkLike()
+      // console.log(testChekingLike, "testChekingLike")
+     // this._setLikeCard2(this._item);
+
+      this._likeLoaderWrapper(this._item, this , this._checkLike())
+     // console.log(this, "это зис")
+      //this._clickLikeButton();
+
     });
+    //!___________________________________________________________________
     elementImg.addEventListener("click", () =>{
       this._handleCardClick(this._link, this._name
       )
@@ -85,9 +134,14 @@ export class Card {
       .setAttribute("alt", `${this._name}`);
 
     this._checkIdCard(this._ownerId)
+    this.showDeleteButtonCard(this._item)
+
 
     this._setEventListeners();
-
+    ///this._setLikeCard2(this._likes);
+    //this.setLikeCard(this._likes);
+    this.countLikes(this._likes);
+    this.checkMylike();
     return this._element;
   }
 

@@ -22,7 +22,7 @@ export class PopupWithForm extends Popup {
 
   _formSubmit = (event) => {
     event.preventDefault();
-        console.log("_form_submt вызывается")                              // попробовать сюда передать метод api
+
     let data = this._getInputValues();
     this._callBackSubmitForm(data);
 
@@ -37,8 +37,9 @@ export class PopupWithForm extends Popup {
   //     console.log(element, "element в setEventListenerSubmitConfirmation")
   //   })
   // }
-  setEventListenerSubmitConfirmation(data,element){
 
+  setEventListenerSubmitConfirmation(data,element){
+    super.setEventListeners();
     const listener = (event)=>{
       event.preventDefault();
       this._callBackSubmitForm(data,element)
@@ -59,4 +60,5 @@ export class PopupWithForm extends Popup {
     //this._popupContainer.removeEventListener("submit", this._formSubmit)
     this._popupContainer.reset();
   }
+
 }
