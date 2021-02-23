@@ -28,35 +28,13 @@ import {
 
 const api = new Api ("https://mesto.nomoreparties.co/v1/cohort-20/","4056c30d-f7e0-4f36-a996-b3ca58e8ceb0");
 
-// const api = new Api({
-//   url: "https://mesto.nomoreparties.co/v1/cohort-20/cards/",
-//   headers: {
-//     authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
-//     "content-type": "application/json",
-//   },
-// });
-// const apiEdditAvatar = new Api({
-//   url: "https://mesto.nomoreparties.co/v1/cohort-20/users/me/avatar",
-//   headers: {
-//     authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
-//     "content-type": "application/json",
-//   },
-// });
-// const apiEddit = new Api({
-//   url: "https://mesto.nomoreparties.co/v1/cohort-20/users/me",
-//   headers: {
-//     authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
-//     "content-type": "application/json",
-//   },
-// });
+
 
 const avatarValidator = new FormValidator(validationConfig, popupAvatar);
 const cardValidator = new FormValidator(validationConfig, popupCard);
 const edditValidator = new FormValidator(validationConfig, popupEditForm);
 
-//const edditPopup = new Popup(popupEditForm);
-//const cardPopup = new Popup(popupCard);
-//const avatarPopup = new Popup(popupAvatar);
+
 const deletePopup = new Popup(popupDelete);
 
 const popupWithImage = new PopupWithImage(popupImg);
@@ -74,6 +52,7 @@ const popupWithFormAvatar = new PopupWithForm(
 const userInfo = new UserInfo({
   profileNameSelector: ".profile__info-name",
   profileJobSelector: ".profile__info-job",
+  profileAvatarButton: ".profile__avatar-img"
 });
 function createNewCard(cardData) {
   const card = new Card(
@@ -142,7 +121,8 @@ function handlePopupAvatareSubmit(data) {
   api
     .addInfoProfileAvatar(data)
     .then((data) => {
-      profileAvatarButton.style.backgroundImage = `url(${data.avatar})`;
+     // profileAvatarButton.style.backgroundImage = `url(${data.avatar})`;
+      userInfo.setUserAvatar(data)
       popupWithFormAvatar.close();
     })
     .catch((err) => {
@@ -156,6 +136,7 @@ function handlePopupAvatareSubmit(data) {
 function openPopupImg(link, name) {
   popupWithImage.open(link, name);
 }
+
 function handlePopupProfileSubmit(data) {
   popupWithFormEddit.renderLoading(true);
   api
@@ -255,10 +236,14 @@ popupWithFormEddit.renderLoading(true);
 api
   .getInfoProfile() // запрос на данные пользователя
   .then((data) => {
+    userInfo.setUserInfo(data);
+    userInfo.setUserAvatar(data);
 
-    profileAvatarButton.style.backgroundImage = `url(${data.avatar})`; //добавления аватара в background-image
-    profileInfoNameNode.textContent = data.name;
-    profileInfoJobNode.textContent = data.about;
+   // profileAvatarButton.style.backgroundImage = `url(${data.avatar})`; //добавления аватара в background-image
+
+    // profileInfoNameNode.textContent = data.name;
+    // profileInfoJobNode.textContent = data.about;
+
   })
   .catch((err) => {
     console.log(err, "err из index.js -apiEdditAnswer");
@@ -266,3 +251,13 @@ api
   .finally(() => {
     popupWithFormEddit.renderLoading(false);
   });
+
+
+
+//// const test = profileAvatarButton.style.backgroundImage
+////   console.log(test, "test")
+
+// //   element = document.getElementById('foo');
+// // color = window.getComputedStyle(element).backgroundColor;
+
+// // const backgroundColorText = window.get

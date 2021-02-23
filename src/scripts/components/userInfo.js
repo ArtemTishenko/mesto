@@ -1,27 +1,28 @@
 export class UserInfo {
-  constructor({ profileNameSelector, profileJobSelector}, api) {
+  constructor({ profileNameSelector, profileJobSelector, profileAvatarButton}) {
     this._profileName = document.querySelector(profileNameSelector);
     this._profileJob = document.querySelector(profileJobSelector);
-    this._api = api;
+    this._profileAvatarButton = document.querySelector(profileAvatarButton)
+
+
   }
   getUserInfo() {
 
     const profile = {
       name: this._profileName.textContent,
       about: this._profileJob.textContent,
+      //avatar: this._profileAvatarButton.style.backgroundImage
     };
     return profile;
   }
   setUserInfo(data) {
-    // console.log(this._api, "this._api");
-    // console.log(data);
-    //  this._api.addInfoProfile(data)
-    //  this._api.getInfoProfile()
-    //  .then((data)=>{
+
     this._profileName.textContent = data.name;
     this._profileJob.textContent = data.about;
-  //      console.log(data,"data_setUserInfo");
-  //  })
 
+  }
+
+  setUserAvatar(data){
+    this._profileAvatarButton.style.backgroundImage =`url(${data.avatar})`;
   }
 }
