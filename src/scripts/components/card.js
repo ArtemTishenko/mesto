@@ -4,7 +4,8 @@ export class Card {
     cardSelector,
     handleCardClick,
     handleDeleteClick,
-    handleLikeClick
+    handleLikeClick,
+    myId
   ) {
     this._item = itemData; // данные с сервера о карточке
     this._name = this._item.name;
@@ -18,6 +19,7 @@ export class Card {
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick; // popupDelete
     this._handleLikeClick = handleLikeClick;
+    this._myId = myId;
   }
 
   _getTemplate() {// возвращает шаблон разметки карточки
@@ -35,7 +37,7 @@ export class Card {
     this._element.remove();
   }
   _checkIdCard(id) {
-    if (id === "eb737b551021d96d37fd06c4") {
+    if (id === this._myId) {
       this.showDeleteButtonCard();
     } else {
       this._cardElement.content
@@ -52,7 +54,7 @@ export class Card {
   _checkLike() {//true/false
 
     return this._likes.some((like) => {
-      return like._id === "eb737b551021d96d37fd06c4";
+      return like._id === this._myId;
     });
   }
 

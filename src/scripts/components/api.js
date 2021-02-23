@@ -23,9 +23,7 @@ export class Api {
       .then((res) => {
         return this._getResponseData(res);
       })
-      .catch((err) => {
-        console.log(err, "err из getAllCarads");
-      });
+
   }
 
   addCard(data) {
@@ -40,9 +38,7 @@ export class Api {
       .then((res) => {
         return this._getResponseData(res);
       })
-      .catch((err) => {
-        console.log(err, "err из addCard");
-      });
+
   }
 
   getInfoProfile() {
@@ -56,9 +52,7 @@ export class Api {
       .then((res) => {
         return this._getResponseData(res);
       })
-      .catch((err) => {
-        console.log(err, "err из getInfoProfile");
-      });
+
   }
 
   addInfoProfile(data) {
@@ -76,9 +70,7 @@ export class Api {
       .then((res) => {
         return this._getResponseData(res);
       })
-      .catch((err) => {
-        console.log(err, "err из catch addInfoProfile");
-      });
+
   }
 
   addInfoProfileAvatar(data) {
@@ -95,9 +87,7 @@ export class Api {
       .then((res) => {
         return this._getResponseData(res);
       })
-      .catch((err) => {
-        console.log(err, "err из catch addInfoProfile");
-      });
+
   }
 
   deleteCard(id) {
@@ -111,9 +101,7 @@ export class Api {
       .then((res) => {
         return this._getResponseData(res);
       })
-      .catch((err) => {
-        console.log(err, "err из deleteCard");
-      });
+
   }
 
   putLike(id) {
@@ -127,9 +115,7 @@ export class Api {
     .then((res) => {
       return this._getResponseData(res);;
     })
-    .catch((err) => {
-      console.log(err, "err из deleteCard");
-    });
+
   }
 
 
@@ -143,9 +129,7 @@ export class Api {
     }).then((res) => {
       return this._getResponseData(res);
     })
-    .catch((err) => {
-      console.log(err, "err из deleteCard");
-    });
+
   }
 
 
