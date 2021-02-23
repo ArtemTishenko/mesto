@@ -6,7 +6,7 @@ export class Api {
 
   }
 
-  getAllCards(){
+  getAllInitialCards(){
     //console.log(`${this._url}cards/`)
     return fetch(`${this._url}cards`, {
       method:"GET",
@@ -120,7 +120,7 @@ export class Api {
   }
 
   deleteCard(id){
-    fetch(`${this._url}cards/${id}`, {
+    return fetch(`${this._url}cards/${id}`, {
       method: 'DELETE',
       headers:{
         authorization: this._token,

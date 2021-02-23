@@ -19,8 +19,8 @@ import {
   popupDelete,
   nameInput,
   jobInput,
-  profileInfoNameNode,
-  profileInfoJobNode,
+  // profileInfoNameNode,
+  // profileInfoJobNode,
   listContainerElement,
   validationConfig,
   profileAvatarButton,
@@ -121,7 +121,6 @@ function handlePopupAvatareSubmit(data) {
   api
     .addInfoProfileAvatar(data)
     .then((data) => {
-     // profileAvatarButton.style.backgroundImage = `url(${data.avatar})`;
       userInfo.setUserAvatar(data)
       popupWithFormAvatar.close();
     })
@@ -161,10 +160,16 @@ function openPopupDelete(data, element) {
   );
   popupWithFormDelete.setEventListenerSubmitConfirmation(data, element); // установили функцию слушателя по submit (вы уверены?)
 }
-function handlePopupDeleteSubmit(data, element) {
-  api.deleteCard(data._id);
+function handlePopupDeleteSubmit(data, element) {//функция подверждения удления карточки
+  api.deleteCard(data._id)
+    .then(()=>{
+      element.remove();
+    })
+    .catch((err)=>{
+      console.log(err, "err из handlePopupDeleteSubmit")
+    })
 
-  element.remove();
+
 }
 
 function setLike(dataCard, element, checkMyLike) {
@@ -207,57 +212,75 @@ avatarValidator.enableValidation();
 cardValidator.enableValidation();
 edditValidator.enableValidation();
 
-api
-  .getAllCards()
-  .then((data) => {
-    const sectionDefault = new Section( //создаем экземпляр класса для начальных карточек
-      {
-        items: data,
-        renderer: () => {
-          data.forEach((initialCard) => {
-            // перебор по массивву данных с начальными карточкамами
-            const card = createNewCard(initialCard); // создали экземпляр для каждой карточки
-            card._checkIdCard(initialCard.owner._id); // проверка что карточка моя и ее можно удалять
-            const cardElement = card.generateCard(); //сгенерировали зполненный шаблон карточки
-            sectionDefault.addItem(cardElement); // добавили в разметку
-          });
+// api
+//   .getAllInitialCards()
+//   .then((data) => {
+//     const sectionDefault = new Section( //создаем экземпляр класса для начальных карточек
+//       {
+//         items: data,
+//         renderer: () => {
+//           data.forEach((initialCard) => {
+//             // перебор по массивву данных с начальными карточкамами
+//             const card = createNewCard(initialCard); // создали экземпляр для каждой карточки
+//             card._checkIdCard(initialCard.owner._id); // проверка что карточка моя и ее можно удалять
+//             const cardElement = card.generateCard(); //сгенерировали зполненный шаблон карточки
+//             sectionDefault.addItem(cardElement); // добавили в разметку
+//           });
+//         },
+//       },
+//       listContainerElement
+//     );
+//     sectionDefault.renderCard(); // вызвали метод у экземпляра класса Section для формирования и добваления default карточeк
+//   })
+//   .catch((err) => {
+//     console.log(err, "err из getAllCards");
+//   })
+
+// popupWithFormEddit.renderLoading(true);
+// api
+//   .getInfoProfile() // запрос на данные пользователя
+//   .then((data) => {
+//     userInfo.setUserInfo(data);
+//     userInfo.setUserAvatar(data);
+//   })
+//   .catch((err) => {
+//     console.log(err, "err из index.js -apiEdditAnswer");
+//   })
+//   .finally(() => {
+//     popupWithFormEddit.renderLoading(false);
+//   });
+
+
+  Promise.all([//в Promise.all передаем массив промисов которые нужно выполнить
+    api.getInfoProfile(),
+    api.getAllInitialCards()
+  ])
+    .then((data)=>{    //попадаем сюда, когда оба промиса будут выполнены
+      const dataProfile = data[0];
+      const dataInitialCards = data[1];
+
+      const sectionDefault = new Section( //создаем экземпляр класса для начальных карточек
+        {
+          items: dataInitialCards,
+          renderer: () => {
+            dataInitialCards.forEach((initialCard) => {// перебор по массивву данных с начальными карточкамами
+              const card = createNewCard(initialCard); // создали экземпляр для каждой карточки
+              card._checkIdCard(initialCard.owner._id); // проверка что карточка моя и ее можно удалять
+              const cardElement = card.generateCard(); //сгенерировали зполненный шаблон карточки
+              sectionDefault.addItem(cardElement); // добавили в разметку
+            });
+          },
         },
-      },
-      listContainerElement
-    );
-    sectionDefault.renderCard(); // вызвали метод у экземпляра класса Section для формирования и добваления default карточeк
-  })
-  .catch((err) => {
-    // catch всегда вызывать из index.js
-    console.log(err, "err из getAllCards");
-  }).finally;
+        listContainerElement
+      );
+      sectionDefault.renderCard(); //все данные получены, отрисовываем страницу
 
-popupWithFormEddit.renderLoading(true);
-api
-  .getInfoProfile() // запрос на данные пользователя
-  .then((data) => {
-    userInfo.setUserInfo(data);
-    userInfo.setUserAvatar(data);
-
-   // profileAvatarButton.style.backgroundImage = `url(${data.avatar})`; //добавления аватара в background-image
-
-    // profileInfoNameNode.textContent = data.name;
-    // profileInfoJobNode.textContent = data.about;
-
-  })
-  .catch((err) => {
-    console.log(err, "err из index.js -apiEdditAnswer");
-  })
-  .finally(() => {
-    popupWithFormEddit.renderLoading(false);
-  });
-
-
-
-//// const test = profileAvatarButton.style.backgroundImage
-////   console.log(test, "test")
-
-// //   element = document.getElementById('foo');
-// // color = window.getComputedStyle(element).backgroundColor;
-
-// // const backgroundColorText = window.get
+      userInfo.setUserInfo(dataProfile);
+      userInfo.setUserAvatar(dataProfile);
+    })
+    .catch((err)=>{     //попадаем сюда если один из промисов завершится ошибкой
+      console.log(err);
+    })
+    .finally(()=>{
+      popupWithFormEddit.renderLoading(false);
+    })
