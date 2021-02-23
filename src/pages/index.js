@@ -24,9 +24,10 @@ import {
   profileAvatarButton,
 } from "../scripts/utils/constants.js";
 
-const api = new Api ("https://mesto.nomoreparties.co/v1/cohort-20/","4056c30d-f7e0-4f36-a996-b3ca58e8ceb0");
-
-
+const api = new Api (
+  "https://mesto.nomoreparties.co/v1/cohort-20/",
+  "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0"
+  );
 
 const avatarValidator = new FormValidator(validationConfig, popupAvatar);
 const cardValidator = new FormValidator(validationConfig, popupCard);
@@ -210,11 +211,11 @@ avatarValidator.enableValidation();
 cardValidator.enableValidation();
 edditValidator.enableValidation();
 
-  Promise.all([//в Promise.all передаем массив промисов которые нужно выполнить
+  Promise.all([
     api.getInfoProfile(),
-    api.getAllInitialCards()
+    api.getAllInitialCards(),
   ])
-    .then((data)=>{    //попадаем сюда, когда оба промиса будут выполнены
+    .then((data) => {
       const dataProfile = data[0];
       const myId = data[0]._id;
       const dataInitialCards = data[1];
@@ -222,7 +223,8 @@ edditValidator.enableValidation();
         {
           items: dataInitialCards,
           renderer: () => {
-            dataInitialCards.forEach((initialCard) => {// перебор по массивву данных с начальными карточкамами
+            dataInitialCards.forEach((initialCard) => {
+              // перебор по массивву данных с начальными карточкамами
               const card = createNewCard(initialCard, myId); // создали экземпляр для каждой карточки
               card._checkIdCard(initialCard.owner._id); // проверка что карточка моя и ее можно удалять
               const cardElement = card.generateCard(); //сгенерировали зполненный шаблон карточки
@@ -236,11 +238,11 @@ edditValidator.enableValidation();
 
       userInfo.setUserInfo(dataProfile);
       userInfo.setUserAvatar(dataProfile);
-
     })
-    .catch((err)=>{     //попадаем сюда если один из промисов завершится ошибкой
+    .catch((err) => {
+      //попадаем сюда если один из промисов завершится ошибкой
       console.log(err);
     })
-    .finally(()=>{
+    .finally(() => {
       popupWithFormEddit.renderLoading(false);
-    })
+    });
