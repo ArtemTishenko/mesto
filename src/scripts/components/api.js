@@ -123,10 +123,15 @@ export class Api {
         authorization: this._token,
         "content-type": "application/json",
       },
-    }).then((res) => {
+    })
+    .then((res) => {
       return this._getResponseData(res);;
+    })
+    .catch((err) => {
+      console.log(err, "err из deleteCard");
     });
   }
+
 
   deleteLike(id) {
     return fetch(`${this._url}cards/likes/${id}`, {
@@ -137,6 +142,9 @@ export class Api {
       },
     }).then((res) => {
       return this._getResponseData(res);
+    })
+    .catch((err) => {
+      console.log(err, "err из deleteCard");
     });
   }
 
