@@ -32,10 +32,12 @@
 @import url(../../src/blocks/popup/popup.css);
 @import url(../../src/blocks/popup/_visible/popup_visible.css);
 @import url(../../src/blocks/popup/__container/popup__container.css);
+@import url(../../src/blocks/popup/__container/_type/popup__container_type_card-delete.css) ;
 @import url(../../src/blocks/popup/__form/popup__form.css);
 @import url(../../src/blocks/popup/__field/popup__field.css);
 @import url(../../src/blocks/popup/__button-close/popup__button-close.css);
 @import url(../../src/blocks/popup/__caption/popup__caption.css);
+@import url(../../src/blocks/popup/__caption/_type/popup__caption_type_card-delete.css);
 @import url(../../src/blocks/popup/__field/popup__field.css);
 @import url(../../src/blocks/popup/__field/_type/popup__field_type_name.css);
 @import url(../../src/blocks/popup/__field/_type/popup__field_type_name.css);
