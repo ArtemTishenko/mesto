@@ -28,14 +28,11 @@ export class PopupWithForm extends Popup {
 
   };
 
-
-
   setEventListenerSubmitConfirmation(data,element){
     super.setEventListeners();
     const listener = (event)=>{
       event.preventDefault();
       this._callBackSubmitForm(data,element)
-      this.close();
       this._popupContainer.removeEventListener("submit", listener)
     }
 
