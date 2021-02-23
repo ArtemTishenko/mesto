@@ -1,14 +1,20 @@
 export class Api {
-  constructor(config){
-    this._url = config.url;
-    this._headers = config.headers;
+  constructor(url, token){
+    this._url = url;
+    this._token = token;
+
 
   }
 
   getAllCards(){
-    return fetch(this._url,{
+    //console.log(`${this._url}cards/`)
+    return fetch(`${this._url}cards`, {
       method:"GET",
-      headers: this._headers
+      headers:{
+        authorization: this._token,
+        "content-type": "application/json"
+      }
+
     }).then((res)=>{
       if (res.ok){ //true false
         return res.json()// Объекты
@@ -21,9 +27,12 @@ export class Api {
   }
 
   addCard(data){
-    return fetch(this._url,{
+    return fetch(`${this._url}cards/`,{
       method:"POST",
-      headers: this._headers,
+      headers:{
+        authorization: this._token,
+        "content-type": "application/json"
+      },
       body: JSON.stringify(data)
     }).then((res)=>{
         if (res.ok){ //true false
@@ -37,23 +46,35 @@ export class Api {
   }
 
   getInfoProfile(){
-    return fetch(this._url,{
+
+    return fetch(`${this._url}users/me`,{
       method:"GET",
-      headers: this._headers
-    }).then((res)=>{
+      headers:{
+        authorization: this._token,
+        "content-type": "application/json"
+      },
+    })
+    .then((res)=>{
       if (res.ok){ //true false
         return res.json()// Объекты
       }return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
-      .catch((err)=>{
-        console.log(err, "err из getInfoProfile")
-      })
+
+    })
+    .then((data)=>{
+      return data
+    })
+    .catch((err)=>{
+      console.log(err, "err из getInfoProfile")
     })
   }
 
   addInfoProfile(data){
-    return fetch(this._url, {
+    return fetch(`${this._url}users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers:{
+        authorization: this._token,
+        "content-type": "application/json"
+      },
       body: JSON.stringify({
         name: data.name,
         about: data.about,
@@ -74,9 +95,12 @@ export class Api {
   }
 
   addInfoProfileAvatar(data){
-     return fetch(this._url, {
+     return fetch(`${this._url}users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers:{
+        authorization: this._token,
+        "content-type": "application/json"
+      },
       body: JSON.stringify({
         avatar:data.avatar
       })
@@ -94,10 +118,14 @@ export class Api {
       console.log(err, "err из catch addInfoProfile");
     })
   }
-  deleteCard(){
-    fetch(this._url, {
+
+  deleteCard(id){
+    fetch(`${this._url}cards/${id}`, {
       method: 'DELETE',
-      headers: this._headers
+      headers:{
+        authorization: this._token,
+        "content-type": "application/json"
+      },
     })
     .then((res)=>{
       if (res.ok){ //true false
@@ -114,10 +142,13 @@ export class Api {
 
   }
 
-  putLike(){
-   return fetch(this._url,{
+  putLike(id){
+   return fetch(`${this._url}cards/likes/${id}`,{
       method:'PUT',
-      headers: this._headers
+      headers:{
+        authorization: this._token,
+        "content-type": "application/json"
+      },
     })
     .then((res)=>{
       if (res.ok){ //true false
@@ -127,10 +158,13 @@ export class Api {
 
   }
 
-  deleteLike(){
-   return fetch(this._url,{
+  deleteLike(id){
+   return fetch(`${this._url}cards/likes/${id}`,{
       method:'DELETE',
-      headers: this._headers
+      headers:{
+        authorization: this._token,
+        "content-type": "application/json"
+      },
     })
     .then((res)=>{
       if (res.ok){ //true false

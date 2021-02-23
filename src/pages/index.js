@@ -26,27 +26,29 @@ import {
   profileAvatarButton,
 } from "../scripts/utils/constants.js";
 
-const api = new Api({
-  url: "https://mesto.nomoreparties.co/v1/cohort-20/cards/",
-  headers: {
-    authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
-    "content-type": "application/json",
-  },
-});
-const apiEdditAvatar = new Api({
-  url: "https://mesto.nomoreparties.co/v1/cohort-20/users/me/avatar",
-  headers: {
-    authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
-    "content-type": "application/json",
-  },
-});
-const apiEddit = new Api({
-  url: "https://mesto.nomoreparties.co/v1/cohort-20/users/me",
-  headers: {
-    authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
-    "content-type": "application/json",
-  },
-});
+const api = new Api ("https://mesto.nomoreparties.co/v1/cohort-20/","4056c30d-f7e0-4f36-a996-b3ca58e8ceb0");
+
+// const api = new Api({
+//   url: "https://mesto.nomoreparties.co/v1/cohort-20/cards/",
+//   headers: {
+//     authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
+//     "content-type": "application/json",
+//   },
+// });
+// const apiEdditAvatar = new Api({
+//   url: "https://mesto.nomoreparties.co/v1/cohort-20/users/me/avatar",
+//   headers: {
+//     authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
+//     "content-type": "application/json",
+//   },
+// });
+// const apiEddit = new Api({
+//   url: "https://mesto.nomoreparties.co/v1/cohort-20/users/me",
+//   headers: {
+//     authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
+//     "content-type": "application/json",
+//   },
+// });
 
 const avatarValidator = new FormValidator(validationConfig, popupAvatar);
 const cardValidator = new FormValidator(validationConfig, popupCard);
@@ -137,7 +139,7 @@ function openPopupAvatar() {
 }
 function handlePopupAvatareSubmit(data) {
   popupWithFormAvatar.renderLoading(true);
-  apiEdditAvatar
+  api
     .addInfoProfileAvatar(data)
     .then((data) => {
       profileAvatarButton.style.backgroundImage = `url(${data.avatar})`;
@@ -156,7 +158,7 @@ function openPopupImg(link, name) {
 }
 function handlePopupProfileSubmit(data) {
   popupWithFormEddit.renderLoading(true);
-  apiEddit
+  api
     .addInfoProfile(data)
     .then(() => {
       userInfo.setUserInfo(data); // вставляем новые значения методом setUserInfo класса UserInfo, data - данные полученные из класса PopupWithForm
@@ -179,31 +181,31 @@ function openPopupDelete(data, element) {
   popupWithFormDelete.setEventListenerSubmitConfirmation(data, element); // установили функцию слушателя по submit (вы уверены?)
 }
 function handlePopupDeleteSubmit(data, element) {
-  const apiDelete = new Api({
-    url: `https://mesto.nomoreparties.co/v1/cohort-20/cards/${data._id}`,
-    headers: {
-      authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
-      "content-type": "application/json",
-    },
-  });
+  // const apiDelete = new Api({
+  //   url: `https://mesto.nomoreparties.co/v1/cohort-20/cards/${data._id}`,
+  //   headers: {
+  //     authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
+  //     "content-type": "application/json",
+  //   },
+  // });
 
-  apiDelete.deleteCard();
+  api.deleteCard(data._id);
 
   element.remove();
 }
 
 function setLike(dataCard, element, checkMyLike) {
 
-  const apiLike = new Api({
-    url: `https://mesto.nomoreparties.co/v1/cohort-20/cards/likes/${dataCard._id}`,
-    headers: {
-      authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
-      "content-type": "application/json",
-    },
-  });
+  // const apiLike = new Api({
+  //   url: `https://mesto.nomoreparties.co/v1/cohort-20/cards/likes/${dataCard._id}`,
+  //   headers: {
+  //     authorization: "4056c30d-f7e0-4f36-a996-b3ca58e8ceb0",
+  //     "content-type": "application/json",
+  //   },
+  // });
   if (checkMyLike) {// если true - мой лайк есть, лайк надо удалить/ если false - лайка нет, надо добавить
-    return apiLike
-      .deleteLike()
+    return api
+      .deleteLike(dataCard._id)
       .then((data) => {
         element.removeLike();
         element.countLikes(data.likes);
@@ -213,8 +215,8 @@ function setLike(dataCard, element, checkMyLike) {
         console.log(err);
       });
   } else {
-    return apiLike
-      .putLike()
+    return api
+      .putLike(dataCard._id)
       .then((data) => {
         element.addLike();
         element.countLikes(data.likes);
@@ -265,9 +267,10 @@ api
   }).finally;
 
 popupWithFormEddit.renderLoading(true);
-apiEddit
+api
   .getInfoProfile() // запрос на данные пользователя
   .then((data) => {
+
     profileAvatarButton.style.backgroundImage = `url(${data.avatar})`; //добавления аватара в background-image
     profileInfoNameNode.textContent = data.name;
     profileInfoJobNode.textContent = data.about;
