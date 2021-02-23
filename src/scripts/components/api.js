@@ -5,7 +5,7 @@ export class Api {
 
   }
 
-  getAllCarads(){
+  getAllCards(){
     return fetch(this._url,{
       method:"GET",
       headers: this._headers
@@ -45,13 +45,13 @@ export class Api {
         return res.json()// Объекты
       }return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
       .catch((err)=>{
-        console.log(err, "err из getAllCarads")
+        console.log(err, "err из getInfoProfile")
       })
     })
   }
 
   addInfoProfile(data){
-    fetch(this._url, {
+    return fetch(this._url, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -65,7 +65,7 @@ export class Api {
       } return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
     })
     .then((data)=>{
-      console.log(data, "data _api")
+
       return data
     })
     .catch((err)=>{
@@ -74,7 +74,7 @@ export class Api {
   }
 
   addInfoProfileAvatar(data){
-    fetch(this._url, {
+     return fetch(this._url, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -87,7 +87,7 @@ export class Api {
       } return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
     })
     .then((data)=>{
-      //console.log(data, "data _api addInfoProfileAvatar")
+
       return data
     })
     .catch((err)=>{
@@ -105,12 +105,13 @@ export class Api {
       } return Promise.reject(`Сервер недостпен!!!Ошибка: ${res.status}`)
     })
     .then((data)=>{
-      //console.log(data, "data _api addInfoProfileAvatar")
+
       return data
     })
     .catch((err)=>{
       console.log(err, "err из deleteCard")
     })
+
   }
 
   putLike(){
@@ -126,7 +127,7 @@ export class Api {
 
   }
 
-  deleteLlike(){
+  deleteLike(){
    return fetch(this._url,{
       method:'DELETE',
       headers: this._headers

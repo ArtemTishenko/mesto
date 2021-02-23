@@ -1,5 +1,4 @@
-//import { data } from "autoprefixer";
-import {Api} from "../../scripts/components/api.js"
+
 export class Card {
   constructor(itemData, cardSelector, handleCardClick, handleDeleteClick, handleLikeClick) {
     this._item = itemData; // данные с сервера о карточке
@@ -17,13 +16,7 @@ export class Card {
 
 
   }
-  _likeLoaderWrapper = (dataCard, element, checkMyLike)=>{
-    this._handleLikeClick(dataCard, element, checkMyLike)
-      .then(({likes})=>{
-        console.log(likes)
-        this._likes = likes
-      })
-  }
+
 
 
   _getTemplate() {// возвращает шаблон разметки карточки
@@ -51,27 +44,13 @@ export class Card {
     this._cardElement.content.querySelector(".element__delete").classList.add("element__delete_visible")
   }
 
+
   _checkLike(){ //true/false
 
     return this._likes.some((like)=>{
       return like._id === "eb737b551021d96d37fd06c4"
     })
   }
-
-  // setLikeCard(dataLikes){
-  //   const counterElemnt = this._element.querySelector(".element__counter");
-  //   counterElemnt.textContent = dataLikes.length;
-
-  //   if (this._checkLike()){
-
-  //   }else{
-  //     //counterElemnt.textContent = dataLikes.length;
-  //     console.log(dataLikes, "dataLikes ")
-  //     //this._element.querySelector(".element__like").classList.add("element__like_active");
-
-  //   }
-  //   //console.log(counterElemnt, "counterElement")
-  // }
 
   addLike(){
     this._element.querySelector(".element__like").classList.add("element__like_active");
@@ -82,7 +61,7 @@ export class Card {
   countLikes(dataCardLikes){
     const counterElemnt = this._element.querySelector(".element__counter");
     counterElemnt.textContent = dataCardLikes.length;
-    console.log(dataCardLikes.length, "dataCard.likes в функции countLikes")
+
   }
   checkMylike(){
     if(this._checkLike()){// если true - мой лайк есть/ false -моего лайк нет
@@ -91,7 +70,13 @@ export class Card {
       this.removeLike()
     }
   }
+  _likeLoaderWrapper = (dataCard, element, checkMyLike)=>{
+    this._handleLikeClick(dataCard, element, checkMyLike)
+      .then(({likes})=>{
 
+        this._likes = likes
+      })
+  }
   _setEventListeners() {// вызов слушателей: лайк, удаление, popupImg ->(open modal -> добавление слушателя клика по overlay)
 
     const elementDelete = this._element.querySelector(".element__delete");
@@ -100,22 +85,15 @@ export class Card {
     const elementImg = this._element.querySelector(".element__img");
 
     elementDelete.addEventListener("click", () => {
-      //const data = this._item;
+
       const element = this._element;
       this._handleDeleteClick(this._item,element); // в popupDelete передается data-объект с сервера, element- DOM разметка нового экземпляра карточки
     });
-    //!___________________________________________________________________
+
     elementLike.addEventListener("click", () => {
-      // const testChekingLike = this._checkLike()
-      // console.log(testChekingLike, "testChekingLike")
-     // this._setLikeCard2(this._item);
-
       this._likeLoaderWrapper(this._item, this , this._checkLike())
-     // console.log(this, "это зис")
-      //this._clickLikeButton();
-
     });
-    //!___________________________________________________________________
+
     elementImg.addEventListener("click", () =>{
       this._handleCardClick(this._link, this._name
       )
