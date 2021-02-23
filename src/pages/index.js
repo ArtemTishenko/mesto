@@ -258,7 +258,6 @@ edditValidator.enableValidation();
     .then((data)=>{    //попадаем сюда, когда оба промиса будут выполнены
       const dataProfile = data[0];
       const dataInitialCards = data[1];
-
       const sectionDefault = new Section( //создаем экземпляр класса для начальных карточек
         {
           items: dataInitialCards,
