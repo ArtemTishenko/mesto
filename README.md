@@ -1,4 +1,5 @@
-# Проект 4: Место
+# Проект: Место
+https://artemtishenko.github.io/mesto/
 
 ### Описание проекта и функциональность
 
@@ -19,10 +20,7 @@
 * Адаптивная верстка
 * ООП
 * webpack
+* babel
 * api
 
-
-### GitHub Pages
-
-* [Ссылка на GitHub Pages](https://artemtishenko.github.io/mesto/)
 
